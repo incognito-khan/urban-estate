@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Property {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  price     Int
+  location  String
+  type      String
+  status    String   @default("available")
+  images    String[]
+  leads     Lead[]
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id         String   @id @default(uuid())
+  name       String
+  phone      String
+  message    String?
+  status     String   @default("new")
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Admin {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+}
+
+enum PropertyStatus {
+  available
+  sold
+}
+
+enum LeadStatus {
+  new
+  contact
+  sold
+}
