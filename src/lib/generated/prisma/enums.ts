@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const PropertyType = {
+  House: 'House',
+  Apartment: 'Apartment',
+  Plot: 'Plot'
+} as const
+
+export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
+
+
 export const PropertyStatus = {
   available: 'available',
   sold: 'sold'

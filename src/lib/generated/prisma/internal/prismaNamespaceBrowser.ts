@@ -76,6 +76,7 @@ export const PropertyScalarFieldEnum = {
   id: 'id',
   title: 'title',
   slug: 'slug',
+  description: 'description',
   price: 'price',
   location: 'location',
   type: 'type',
@@ -103,7 +104,8 @@ export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof Lead
 export const AdminScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password: 'password'
+  password: 'password',
+  name: 'name'
 } as const
 
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]

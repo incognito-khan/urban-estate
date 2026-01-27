@@ -8,12 +8,14 @@ export async function GET(request, { params }) {
       where: { id },
       include: { leads: true },
     });
-    return NextResponse.json({
-      message: "Property fetched successfully",
-      status: 200,
-      data: property,
-      success: true,
-    });
+    return NextResponse.json(
+      {
+        message: "Property fetched successfully",
+        data: property,
+        success: true,
+      },
+      { status: 200 },
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json({

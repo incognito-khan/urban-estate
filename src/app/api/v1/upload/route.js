@@ -23,7 +23,14 @@ export async function POST(req) {
       resource_type: "auto",
     });
 
-    return NextResponse.json({ url: uploadResponse.secure_url });
+    return NextResponse.json(
+      {
+        url: uploadResponse.secure_url,
+        success: true,
+        message: "Upload successful",
+      },
+      { status: 200 },
+    );
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });

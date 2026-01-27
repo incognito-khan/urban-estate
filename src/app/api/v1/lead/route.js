@@ -40,7 +40,19 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const leads = await prisma.lead.findMany();
+    const leads = await prisma.lead.findMany({
+      include: {
+        property: {
+          select: {
+            title: true,
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
     return NextResponse.json({
       message: "Leads fetched successfully",
       status: 200,

@@ -29,7 +29,7 @@ export type LeadMinAggregateOutputType = {
   name: string | null
   phone: string | null
   message: string | null
-  status: string | null
+  status: $Enums.LeadStatus | null
   propertyId: string | null
   createdAt: Date | null
 }
@@ -39,7 +39,7 @@ export type LeadMaxAggregateOutputType = {
   name: string | null
   phone: string | null
   message: string | null
-  status: string | null
+  status: $Enums.LeadStatus | null
   propertyId: string | null
   createdAt: Date | null
 }
@@ -164,7 +164,7 @@ export type LeadGroupByOutputType = {
   name: string
   phone: string
   message: string | null
-  status: string
+  status: $Enums.LeadStatus
   propertyId: string
   createdAt: Date
   _count: LeadCountAggregateOutputType | null
@@ -195,7 +195,7 @@ export type LeadWhereInput = {
   name?: Prisma.StringFilter<"Lead"> | string
   phone?: Prisma.StringFilter<"Lead"> | string
   message?: Prisma.StringNullableFilter<"Lead"> | string | null
-  status?: Prisma.StringFilter<"Lead"> | string
+  status?: Prisma.EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
   propertyId?: Prisma.StringFilter<"Lead"> | string
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
@@ -220,7 +220,7 @@ export type LeadWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Lead"> | string
   phone?: Prisma.StringFilter<"Lead"> | string
   message?: Prisma.StringNullableFilter<"Lead"> | string | null
-  status?: Prisma.StringFilter<"Lead"> | string
+  status?: Prisma.EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
   propertyId?: Prisma.StringFilter<"Lead"> | string
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
@@ -247,7 +247,7 @@ export type LeadScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Lead"> | string
   phone?: Prisma.StringWithAggregatesFilter<"Lead"> | string
   message?: Prisma.StringNullableWithAggregatesFilter<"Lead"> | string | null
-  status?: Prisma.StringWithAggregatesFilter<"Lead"> | string
+  status?: Prisma.EnumLeadStatusWithAggregatesFilter<"Lead"> | $Enums.LeadStatus
   propertyId?: Prisma.StringWithAggregatesFilter<"Lead"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lead"> | Date | string
 }
@@ -257,7 +257,7 @@ export type LeadCreateInput = {
   name: string
   phone: string
   message?: string | null
-  status?: string
+  status?: $Enums.LeadStatus
   createdAt?: Date | string
   property: Prisma.PropertyCreateNestedOneWithoutLeadsInput
 }
@@ -267,7 +267,7 @@ export type LeadUncheckedCreateInput = {
   name: string
   phone: string
   message?: string | null
-  status?: string
+  status?: $Enums.LeadStatus
   propertyId: string
   createdAt?: Date | string
 }
@@ -277,7 +277,7 @@ export type LeadUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   property?: Prisma.PropertyUpdateOneRequiredWithoutLeadsNestedInput
 }
@@ -287,7 +287,7 @@ export type LeadUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -297,7 +297,7 @@ export type LeadCreateManyInput = {
   name: string
   phone: string
   message?: string | null
-  status?: string
+  status?: $Enums.LeadStatus
   propertyId: string
   createdAt?: Date | string
 }
@@ -307,7 +307,7 @@ export type LeadUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -316,7 +316,7 @@ export type LeadUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   propertyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -403,8 +403,8 @@ export type LeadUncheckedUpdateManyWithoutPropertyNestedInput = {
   deleteMany?: Prisma.LeadScalarWhereInput | Prisma.LeadScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type EnumLeadStatusFieldUpdateOperationsInput = {
+  set?: $Enums.LeadStatus
 }
 
 export type LeadCreateWithoutPropertyInput = {
@@ -412,7 +412,7 @@ export type LeadCreateWithoutPropertyInput = {
   name: string
   phone: string
   message?: string | null
-  status?: string
+  status?: $Enums.LeadStatus
   createdAt?: Date | string
 }
 
@@ -421,7 +421,7 @@ export type LeadUncheckedCreateWithoutPropertyInput = {
   name: string
   phone: string
   message?: string | null
-  status?: string
+  status?: $Enums.LeadStatus
   createdAt?: Date | string
 }
 
@@ -459,7 +459,7 @@ export type LeadScalarWhereInput = {
   name?: Prisma.StringFilter<"Lead"> | string
   phone?: Prisma.StringFilter<"Lead"> | string
   message?: Prisma.StringNullableFilter<"Lead"> | string | null
-  status?: Prisma.StringFilter<"Lead"> | string
+  status?: Prisma.EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
   propertyId?: Prisma.StringFilter<"Lead"> | string
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
 }
@@ -469,7 +469,7 @@ export type LeadCreateManyPropertyInput = {
   name: string
   phone: string
   message?: string | null
-  status?: string
+  status?: $Enums.LeadStatus
   createdAt?: Date | string
 }
 
@@ -478,7 +478,7 @@ export type LeadUpdateWithoutPropertyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -487,7 +487,7 @@ export type LeadUncheckedUpdateWithoutPropertyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -496,7 +496,7 @@ export type LeadUncheckedUpdateManyWithoutPropertyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -566,7 +566,7 @@ export type $LeadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     phone: string
     message: string | null
-    status: string
+    status: $Enums.LeadStatus
     propertyId: string
     createdAt: Date
   }, ExtArgs["result"]["lead"]>
@@ -997,7 +997,7 @@ export interface LeadFieldRefs {
   readonly name: Prisma.FieldRef<"Lead", 'String'>
   readonly phone: Prisma.FieldRef<"Lead", 'String'>
   readonly message: Prisma.FieldRef<"Lead", 'String'>
-  readonly status: Prisma.FieldRef<"Lead", 'String'>
+  readonly status: Prisma.FieldRef<"Lead", 'LeadStatus'>
   readonly propertyId: Prisma.FieldRef<"Lead", 'String'>
   readonly createdAt: Prisma.FieldRef<"Lead", 'DateTime'>
 }

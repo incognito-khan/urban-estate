@@ -8,33 +8,41 @@ datasource db {
 }
 
 model Property {
-  id        String   @id @default(uuid())
-  title     String
-  slug      String   @unique
-  price     Int
-  location  String
-  type      String
-  status    String   @default("available")
-  images    String[]
-  leads     Lead[]
-  createdAt DateTime @default(now())
+  id          String         @id @default(uuid())
+  title       String
+  slug        String         @unique
+  description String?
+  price       Int
+  location    String
+  type        PropertyType
+  status      PropertyStatus @default(available)
+  images      String[]
+  leads       Lead[]
+  createdAt   DateTime       @default(now())
 }
 
 model Lead {
-  id         String   @id @default(uuid())
+  id         String     @id @default(uuid())
   name       String
   phone      String
   message    String?
-  status     String   @default("new")
+  status     LeadStatus @default(new)
   propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
-  createdAt  DateTime @default(now())
+  property   Property   @relation(fields: [propertyId], references: [id])
+  createdAt  DateTime   @default(now())
 }
 
 model Admin {
-  id       String @id @default(uuid())
-  email    String @unique
+  id       String  @id @default(uuid())
+  email    String  @unique
   password String
+  name     String?
+}
+
+enum PropertyType {
+  House
+  Apartment
+  Plot
 }
 
 enum PropertyStatus {

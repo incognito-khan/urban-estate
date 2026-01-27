@@ -3,6 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BootstrapClient from "../components/bootstrap-client";
 import "../../public/assets/css/main.css";
 import "../../public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
+import "../../public/admin/css/sb-admin-2.min.css";
+import ReduxProvider from "@/redux/provider";
+import ToastProvider from "@/components/ToastProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +27,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <BootstrapClient />
-        {children}
+        <ReduxProvider>
+          {children} <ToastProvider />
+        </ReduxProvider>
       </body>
     </html>
   );

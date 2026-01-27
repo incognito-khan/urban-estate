@@ -38,10 +38,11 @@ export type PropertyMinAggregateOutputType = {
   id: string | null
   title: string | null
   slug: string | null
+  description: string | null
   price: number | null
   location: string | null
-  type: string | null
-  status: string | null
+  type: $Enums.PropertyType | null
+  status: $Enums.PropertyStatus | null
   createdAt: Date | null
 }
 
@@ -49,10 +50,11 @@ export type PropertyMaxAggregateOutputType = {
   id: string | null
   title: string | null
   slug: string | null
+  description: string | null
   price: number | null
   location: string | null
-  type: string | null
-  status: string | null
+  type: $Enums.PropertyType | null
+  status: $Enums.PropertyStatus | null
   createdAt: Date | null
 }
 
@@ -60,6 +62,7 @@ export type PropertyCountAggregateOutputType = {
   id: number
   title: number
   slug: number
+  description: number
   price: number
   location: number
   type: number
@@ -82,6 +85,7 @@ export type PropertyMinAggregateInputType = {
   id?: true
   title?: true
   slug?: true
+  description?: true
   price?: true
   location?: true
   type?: true
@@ -93,6 +97,7 @@ export type PropertyMaxAggregateInputType = {
   id?: true
   title?: true
   slug?: true
+  description?: true
   price?: true
   location?: true
   type?: true
@@ -104,6 +109,7 @@ export type PropertyCountAggregateInputType = {
   id?: true
   title?: true
   slug?: true
+  description?: true
   price?: true
   location?: true
   type?: true
@@ -203,10 +209,11 @@ export type PropertyGroupByOutputType = {
   id: string
   title: string
   slug: string
+  description: string | null
   price: number
   location: string
-  type: string
-  status: string
+  type: $Enums.PropertyType
+  status: $Enums.PropertyStatus
   images: string[]
   createdAt: Date
   _count: PropertyCountAggregateOutputType | null
@@ -238,10 +245,11 @@ export type PropertyWhereInput = {
   id?: Prisma.StringFilter<"Property"> | string
   title?: Prisma.StringFilter<"Property"> | string
   slug?: Prisma.StringFilter<"Property"> | string
+  description?: Prisma.StringNullableFilter<"Property"> | string | null
   price?: Prisma.IntFilter<"Property"> | number
   location?: Prisma.StringFilter<"Property"> | string
-  type?: Prisma.StringFilter<"Property"> | string
-  status?: Prisma.StringFilter<"Property"> | string
+  type?: Prisma.EnumPropertyTypeFilter<"Property"> | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFilter<"Property"> | $Enums.PropertyStatus
   images?: Prisma.StringNullableListFilter<"Property">
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   leads?: Prisma.LeadListRelationFilter
@@ -251,6 +259,7 @@ export type PropertyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
   location?: Prisma.SortOrder
   type?: Prisma.SortOrder
@@ -267,10 +276,11 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PropertyWhereInput[]
   NOT?: Prisma.PropertyWhereInput | Prisma.PropertyWhereInput[]
   title?: Prisma.StringFilter<"Property"> | string
+  description?: Prisma.StringNullableFilter<"Property"> | string | null
   price?: Prisma.IntFilter<"Property"> | number
   location?: Prisma.StringFilter<"Property"> | string
-  type?: Prisma.StringFilter<"Property"> | string
-  status?: Prisma.StringFilter<"Property"> | string
+  type?: Prisma.EnumPropertyTypeFilter<"Property"> | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFilter<"Property"> | $Enums.PropertyStatus
   images?: Prisma.StringNullableListFilter<"Property">
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   leads?: Prisma.LeadListRelationFilter
@@ -280,6 +290,7 @@ export type PropertyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
   location?: Prisma.SortOrder
   type?: Prisma.SortOrder
@@ -300,10 +311,11 @@ export type PropertyScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Property"> | string
   title?: Prisma.StringWithAggregatesFilter<"Property"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Property"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   price?: Prisma.IntWithAggregatesFilter<"Property"> | number
   location?: Prisma.StringWithAggregatesFilter<"Property"> | string
-  type?: Prisma.StringWithAggregatesFilter<"Property"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Property"> | string
+  type?: Prisma.EnumPropertyTypeWithAggregatesFilter<"Property"> | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusWithAggregatesFilter<"Property"> | $Enums.PropertyStatus
   images?: Prisma.StringNullableListFilter<"Property">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Property"> | Date | string
 }
@@ -312,10 +324,11 @@ export type PropertyCreateInput = {
   id?: string
   title: string
   slug: string
+  description?: string | null
   price: number
   location: string
-  type: string
-  status?: string
+  type: $Enums.PropertyType
+  status?: $Enums.PropertyStatus
   images?: Prisma.PropertyCreateimagesInput | string[]
   createdAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
@@ -325,10 +338,11 @@ export type PropertyUncheckedCreateInput = {
   id?: string
   title: string
   slug: string
+  description?: string | null
   price: number
   location: string
-  type: string
-  status?: string
+  type: $Enums.PropertyType
+  status?: $Enums.PropertyStatus
   images?: Prisma.PropertyCreateimagesInput | string[]
   createdAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
@@ -338,10 +352,11 @@ export type PropertyUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
   images?: Prisma.PropertyUpdateimagesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
@@ -351,10 +366,11 @@ export type PropertyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
   images?: Prisma.PropertyUpdateimagesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
@@ -364,10 +380,11 @@ export type PropertyCreateManyInput = {
   id?: string
   title: string
   slug: string
+  description?: string | null
   price: number
   location: string
-  type: string
-  status?: string
+  type: $Enums.PropertyType
+  status?: $Enums.PropertyStatus
   images?: Prisma.PropertyCreateimagesInput | string[]
   createdAt?: Date | string
 }
@@ -376,10 +393,11 @@ export type PropertyUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
   images?: Prisma.PropertyUpdateimagesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -388,10 +406,11 @@ export type PropertyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
   images?: Prisma.PropertyUpdateimagesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -408,6 +427,7 @@ export type PropertyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   location?: Prisma.SortOrder
   type?: Prisma.SortOrder
@@ -424,6 +444,7 @@ export type PropertyMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   location?: Prisma.SortOrder
   type?: Prisma.SortOrder
@@ -435,6 +456,7 @@ export type PropertyMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   location?: Prisma.SortOrder
   type?: Prisma.SortOrder
@@ -459,12 +481,24 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type EnumPropertyTypeFieldUpdateOperationsInput = {
+  set?: $Enums.PropertyType
+}
+
+export type EnumPropertyStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PropertyStatus
 }
 
 export type PropertyUpdateimagesInput = {
@@ -494,10 +528,11 @@ export type PropertyCreateWithoutLeadsInput = {
   id?: string
   title: string
   slug: string
+  description?: string | null
   price: number
   location: string
-  type: string
-  status?: string
+  type: $Enums.PropertyType
+  status?: $Enums.PropertyStatus
   images?: Prisma.PropertyCreateimagesInput | string[]
   createdAt?: Date | string
 }
@@ -506,10 +541,11 @@ export type PropertyUncheckedCreateWithoutLeadsInput = {
   id?: string
   title: string
   slug: string
+  description?: string | null
   price: number
   location: string
-  type: string
-  status?: string
+  type: $Enums.PropertyType
+  status?: $Enums.PropertyStatus
   images?: Prisma.PropertyCreateimagesInput | string[]
   createdAt?: Date | string
 }
@@ -534,10 +570,11 @@ export type PropertyUpdateWithoutLeadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
   images?: Prisma.PropertyUpdateimagesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -546,10 +583,11 @@ export type PropertyUncheckedUpdateWithoutLeadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPropertyTypeFieldUpdateOperationsInput | $Enums.PropertyType
+  status?: Prisma.EnumPropertyStatusFieldUpdateOperationsInput | $Enums.PropertyStatus
   images?: Prisma.PropertyUpdateimagesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -589,6 +627,7 @@ export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   title?: boolean
   slug?: boolean
+  description?: boolean
   price?: boolean
   location?: boolean
   type?: boolean
@@ -603,6 +642,7 @@ export type PropertySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   title?: boolean
   slug?: boolean
+  description?: boolean
   price?: boolean
   location?: boolean
   type?: boolean
@@ -615,6 +655,7 @@ export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   title?: boolean
   slug?: boolean
+  description?: boolean
   price?: boolean
   location?: boolean
   type?: boolean
@@ -627,6 +668,7 @@ export type PropertySelectScalar = {
   id?: boolean
   title?: boolean
   slug?: boolean
+  description?: boolean
   price?: boolean
   location?: boolean
   type?: boolean
@@ -635,7 +677,7 @@ export type PropertySelectScalar = {
   createdAt?: boolean
 }
 
-export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "price" | "location" | "type" | "status" | "images" | "createdAt", ExtArgs["result"]["property"]>
+export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "price" | "location" | "type" | "status" | "images" | "createdAt", ExtArgs["result"]["property"]>
 export type PropertyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   leads?: boolean | Prisma.Property$leadsArgs<ExtArgs>
   _count?: boolean | Prisma.PropertyCountOutputTypeDefaultArgs<ExtArgs>
@@ -652,10 +694,11 @@ export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     title: string
     slug: string
+    description: string | null
     price: number
     location: string
-    type: string
-    status: string
+    type: $Enums.PropertyType
+    status: $Enums.PropertyStatus
     images: string[]
     createdAt: Date
   }, ExtArgs["result"]["property"]>
@@ -1085,10 +1128,11 @@ export interface PropertyFieldRefs {
   readonly id: Prisma.FieldRef<"Property", 'String'>
   readonly title: Prisma.FieldRef<"Property", 'String'>
   readonly slug: Prisma.FieldRef<"Property", 'String'>
+  readonly description: Prisma.FieldRef<"Property", 'String'>
   readonly price: Prisma.FieldRef<"Property", 'Int'>
   readonly location: Prisma.FieldRef<"Property", 'String'>
-  readonly type: Prisma.FieldRef<"Property", 'String'>
-  readonly status: Prisma.FieldRef<"Property", 'String'>
+  readonly type: Prisma.FieldRef<"Property", 'PropertyType'>
+  readonly status: Prisma.FieldRef<"Property", 'PropertyStatus'>
   readonly images: Prisma.FieldRef<"Property", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Property", 'DateTime'>
 }
