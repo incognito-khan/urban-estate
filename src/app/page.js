@@ -80,12 +80,7 @@ export default function Home() {
     if (searchFilters.beds) queryParams.append("beds", searchFilters.beds);
     if (searchFilters.baths) queryParams.append("baths", searchFilters.baths);
 
-    router.push(`/properties?${params.toString()}`);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    filterProperties();
+    router.push(`/properties?${queryParams.toString()}`);
   };
 
   // Clear filters
@@ -151,7 +146,7 @@ export default function Home() {
                     data-aos="fade-up"
                     data-aos-delay={300}
                   >
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSearch}>
                       {/* BUY / RENT TOGGLE */}
                       <div className="d-flex gap-2 mb-3">
                         <button
