@@ -150,10 +150,10 @@ function PropertiesContent() {
                 <div className="col-lg-8">
                   <h1 className="heading-title">Properties</h1>
                   <p className="mb-0">
-                    Odio et unde deleniti. Deserunt numquam exercitationem.
-                    Officiis quo odio sint voluptas consequatur ut a odio
-                    voluptatem. Sit dolorum debitis veritatis natus dolores.
-                    Quasi ratione sint. Sit quaerat ipsum dolorem.
+                    Explore our curated list of premium properties. From cozy
+                    apartments to luxurious villas, find your dream home with
+                    UrbanEstate today. Filter by location, price, and features
+                    to find exactly what you are looking for.
                   </p>
                 </div>
               </div>
@@ -252,7 +252,7 @@ function PropertiesContent() {
                             </div>
                             <div className="property-content">
                               <div className="property-price">
-                                ${property.price?.toLocaleString()}
+                                PKR {property.price?.toLocaleString()}
                               </div>
                               <h4 className="property-title">
                                 <Link href={`/properties/${property.id}`}>
@@ -338,7 +338,7 @@ function PropertiesContent() {
                                   </p>
                                 </div>
                                 <div className="property-price">
-                                  ${property.price?.toLocaleString()}
+                                  PKR {property.price?.toLocaleString()}
                                 </div>
                               </div>
                               <div className="mini-specs">
@@ -668,7 +668,7 @@ function PropertiesContent() {
                                 {prop.location}
                               </p>
                               <strong className="text-primary">
-                                ${prop.price?.toLocaleString()}
+                                PKR {prop.price?.toLocaleString()}
                               </strong>
                             </div>
                           </div>

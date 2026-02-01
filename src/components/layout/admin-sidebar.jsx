@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
+  const [isPropertiesOpen, setIsPropertiesOpen] = useState(false);
+
   return (
     <ul
       className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${isCollapsed ? "toggled" : ""}`}
@@ -34,11 +36,10 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
       {/* Properties Dropdown */}
       <li className="nav-item">
         <button
-          className={`nav-link collapsed btn btn-link ${isCollapsed ? "text-center w-100" : "text-left"}`}
+          className={`nav-link ${isPropertiesOpen ? "" : "collapsed"} btn btn-link ${isCollapsed ? "text-center w-100" : "text-left shadow-none"}`}
           type="button"
-          data-toggle="collapse"
-          data-target="#collapseProperties"
-          aria-expanded="false"
+          onClick={() => setIsPropertiesOpen(!isPropertiesOpen)}
+          aria-expanded={isPropertiesOpen}
           aria-controls="collapseProperties"
         >
           <i className="fas fa-fw fa-home"></i>
@@ -47,7 +48,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
 
         <div
           id="collapseProperties"
-          className="collapse"
+          className={`collapse ${isPropertiesOpen ? "show" : ""}`}
           aria-labelledby="headingProperties"
           data-parent="#accordionSidebar"
         >

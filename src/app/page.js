@@ -337,7 +337,7 @@ export default function Home() {
                         className="img-fluid"
                       />
                       <div className="property-tag">
-                        <span className="price">$850,000</span>
+                        <span className="price">PKR 850,000</span>
                         <span className="type">Featured</span>
                       </div>
                     </div>
@@ -607,7 +607,7 @@ export default function Home() {
                               </div>
                             </div>
                             <div className="price">
-                              ${displayProperties[0].price?.toLocaleString()}
+                              PKR {displayProperties[0].price?.toLocaleString()}
                             </div>
                           </div>
                           <p className="excerpt">
@@ -702,7 +702,7 @@ export default function Home() {
                               </div>
                               <div className="mini-foot">
                                 <div className="mini-price">
-                                  ${prop.price?.toLocaleString()}
+                                  PKR {prop.price?.toLocaleString()}
                                 </div>
                                 <Link
                                   href={`/properties/${prop.id}`}
@@ -774,7 +774,7 @@ export default function Home() {
                           </ul>
                           <div className="stack-foot">
                             <span className="stack-price">
-                              ${prop.price?.toLocaleString()}
+                              PKR {prop.price?.toLocaleString()}
                             </span>
                             <Link
                               href={`/properties/${prop.id}`}
