@@ -1,8 +1,18 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { slugify } from "@/lib/slugify";
+import { verifyAdmin } from "@/lib/auth";
 
 export async function POST(request) {
+  // 1. Verify Admin Access
+  const admin = await verifyAdmin(request);
+  if (!admin) {
+    return NextResponse.json(
+      { error: "Forbidden: Admin access required", success: false },
+      { status: 403 },
+    );
+  }
+
   try {
     const {
       title,
@@ -214,6 +224,15 @@ export async function GET(request) {
  * DELETE PROPERTY
  */
 export async function DELETE(request) {
+  // 1. Verify Admin Access
+  const admin = await verifyAdmin(request);
+  if (!admin) {
+    return NextResponse.json(
+      { error: "Forbidden: Admin access required", success: false },
+      { status: 403 },
+    );
+  }
+
   try {
     const { id } = await request.json();
 
@@ -258,6 +277,15 @@ export async function DELETE(request) {
  * UPDATE PROPERTY
  */
 export async function PATCH(request) {
+  // 1. Verify Admin Access
+  const admin = await verifyAdmin(request);
+  if (!admin) {
+    return NextResponse.json(
+      { error: "Forbidden: Admin access required", success: false },
+      { status: 403 },
+    );
+  }
+
   try {
     const {
       id,

@@ -11,6 +11,7 @@ export function generateToken(payload) {
     throw new Error("JWT_SECRET is not defined");
   }
 
+  // Payload should include { id, email, role }
   return jwt.sign(payload, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
   });

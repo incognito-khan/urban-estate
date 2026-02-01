@@ -31,7 +31,11 @@ export async function POST(request) {
       );
     }
 
-    const token = generateToken({ id: admin.id, email: admin.email });
+    const token = generateToken({
+      id: admin.id,
+      email: admin.email,
+      role: admin.role,
+    });
 
     return NextResponse.json(
       {
@@ -41,6 +45,7 @@ export async function POST(request) {
           id: admin.id,
           email: admin.email,
           name: admin.name,
+          role: admin.role,
         },
         token,
       },

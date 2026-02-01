@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "@/redux/slices/authSlice";
+import { logoutUser } from "@/redux/slices/authSlice";
 import { useRouter } from "next/navigation";
 
 export default function AdminHeader() {
@@ -8,11 +8,8 @@ export default function AdminHeader() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const logoutUser = () => {
-    dispatch(logout());
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    router.push("/admin/login");
+  const handleLogout = () => {
+    dispatch(logoutUser({ router }));
   };
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -243,12 +240,13 @@ export default function AdminHeader() {
             <span className="mr-2 d-none d-lg-inline text-gray-600 small">
               {user?.name}
             </span>
+            {/* <i className="fas fa-user-circle fa-2x text-gray-500"></i> */}
           </a>
           <div
             className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
             aria-labelledby="userDropdown"
           >
-            <a className="dropdown-item" href="#">
+            {/* <a className="dropdown-item" href="#">
               <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
               Profile
             </a>
@@ -259,9 +257,9 @@ export default function AdminHeader() {
             <a className="dropdown-item" href="#">
               <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
               Activity Log
-            </a>
-            <div className="dropdown-divider"></div>
-            <button className="dropdown-item" onClick={logoutUser}>
+            </a> */}
+            {/* <div className="dropdown-divider"></div> */}
+            <button className="dropdown-item" onClick={handleLogout}>
               <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
               Logout
             </button>
