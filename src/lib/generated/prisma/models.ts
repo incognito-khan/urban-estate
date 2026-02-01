@@ -11,4 +11,5 @@
 export type * from './models/Property.ts'
 export type * from './models/Lead.ts'
 export type * from './models/Admin.ts'
+export type * from './models/Newsletter.ts'
 export type * from './commonInputTypes.ts'

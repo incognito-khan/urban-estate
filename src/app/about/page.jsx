@@ -1,139 +1,27 @@
-import React from "react";
+import Link from "next/link";
+
+export const metadata = {
+  title: "About Us | UrbanEstate",
+  description:
+    "Learn more about UrbanEstate, your trusted and experienced real estate partner since 2010.",
+};
 
 export default function About() {
   return (
     <div>
-      <header
-        id="header"
-        className="header d-flex align-items-center fixed-top"
-      >
-        <div className="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-          <a
-            href="index.html"
-            className="logo d-flex align-items-center me-auto me-xl-0"
-          >
-            {/* Uncomment the line below if you also wish to use an image logo */}
-            {/* <img src="assets/img/logo.webp" alt=""> */}
-            <h1 className="sitename">TheProperty</h1>
-          </a>
-          <nav id="navmenu" className="navmenu">
-            <ul>
-              <li>
-                <a href="index.html">Home</a>
-              </li>
-              <li>
-                <a href="about.html" className="active">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="properties.html">Properties</a>
-              </li>
-              <li>
-                <a href="services.html">Services</a>
-              </li>
-              <li>
-                <a href="agents.html">Agents</a>
-              </li>
-              <li>
-                <a href="blog.html">Blog</a>
-              </li>
-              <li className="dropdown">
-                <a href="#">
-                  <span>More Pages</span>{" "}
-                  <i className="bi bi-chevron-down toggle-dropdown" />
-                </a>
-                <ul>
-                  <li>
-                    <a href="property-details.html">Property Details</a>
-                  </li>
-                  <li>
-                    <a href="service-details.html">Service Details</a>
-                  </li>
-                  <li>
-                    <a href="agent-profile.html">Agent Profile</a>
-                  </li>
-                  <li>
-                    <a href="blog-details.html">Blog Details</a>
-                  </li>
-                  <li>
-                    <a href="terms.html">Terms</a>
-                  </li>
-                  <li>
-                    <a href="privacy.html">Privacy</a>
-                  </li>
-                  <li>
-                    <a href="404.html">404</a>
-                  </li>
-                </ul>
-              </li>
-              <li className="dropdown">
-                <a href="#">
-                  <span>Dropdown</span>{" "}
-                  <i className="bi bi-chevron-down toggle-dropdown" />
-                </a>
-                <ul>
-                  <li>
-                    <a href="#">Dropdown 1</a>
-                  </li>
-                  <li className="dropdown">
-                    <a href="#">
-                      <span>Deep Dropdown</span>{" "}
-                      <i className="bi bi-chevron-down toggle-dropdown" />
-                    </a>
-                    <ul>
-                      <li>
-                        <a href="#">Deep Dropdown 1</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 2</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 3</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 4</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 5</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 2</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 3</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 4</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="contact.html">Contact</a>
-              </li>
-            </ul>
-            <i className="mobile-nav-toggle d-xl-none bi bi-list" />
-          </nav>
-          <a className="btn-getstarted" href="properties.html">
-            Get Started
-          </a>
-        </div>
-      </header>
-      <main className="main">
+      <main className="main pt-5 mt-5">
         {/* Page Title */}
         <div className="page-title">
           <div className="heading">
             <div className="container">
               <div className="row d-flex justify-content-center text-center">
                 <div className="col-lg-8">
-                  <h1 className="heading-title">About</h1>
+                  <h1 className="heading-title">About Us</h1>
                   <p className="mb-0">
-                    Odio et unde deleniti. Deserunt numquam exercitationem.
-                    Officiis quo odio sint voluptas consequatur ut a odio
-                    voluptatem. Sit dolorum debitis veritatis natus dolores.
-                    Quasi ratione sint. Sit quaerat ipsum dolorem.
+                    At UrbanEstate, we don't just sell properties; we help you
+                    find your place in the world. With over a decade of
+                    experience, we are dedicated to making your real estate
+                    journey seamless and successful.
                   </p>
                 </div>
               </div>
@@ -143,7 +31,7 @@ export default function About() {
             <div className="container">
               <ol>
                 <li>
-                  <a href="index.html">Home</a>
+                  <Link href="/">Home</Link>
                 </li>
                 <li className="current">About</li>
               </ol>
@@ -167,17 +55,18 @@ export default function About() {
                   </div>
                   <h2>Building Dreams, Creating Homes Since 2010</h2>
                   <p className="lead-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris. Sed ut perspiciatis unde omnis iste natus
-                    error sit voluptatem accusantium doloremque laudantium.
+                    Founded on the principles of integrity, transparency, and
+                    purely client-centric service, UrbanEstate has grown from a
+                    small local agency to a regional leader in residential and
+                    commercial real estate.
                   </p>
                   <p>
-                    Totam rem aperiam, eaque ipsa quae ab illo inventore
-                    veritatis et quasi architecto beatae vitae dicta sunt
-                    explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                    aspernatur aut odit aut fugit.
+                    Our mission is simple: to empower our clients with the
+                    knowledge and resources they need to make informed
+                    decisions. Whether you are buying your first home, seeking a
+                    lucrative investment, or selling a cherished property, we
+                    are here to guide you every step of the way. We believe in
+                    building lasting relationships, not just closing deals.
                   </p>
                   <div
                     className="founder-highlight"
@@ -193,8 +82,9 @@ export default function About() {
                     </div>
                     <div className="founder-info">
                       <blockquote>
-                        "Neque porro quisquam est qui dolorem ipsum quia dolor
-                        sit amet consectetur adipisci velit."
+                        "Real estate is more than just transactions; it's about
+                        people, their dreams, and the communities we build
+                        together."
                       </blockquote>
                       <div className="founder-details">
                         <h5>Michael Thompson</h5>
@@ -253,7 +143,7 @@ export default function About() {
                         data-purecounter-duration={2}
                         className="purecounter"
                       />
-                      +
+                      2,850+
                     </div>
                     <div className="achievement-label">Properties Sold</div>
                   </div>
@@ -274,7 +164,7 @@ export default function About() {
                         data-purecounter-duration={2}
                         className="purecounter"
                       />
-                      %
+                      98%
                     </div>
                     <div className="achievement-label">Client Satisfaction</div>
                   </div>
@@ -295,6 +185,7 @@ export default function About() {
                         data-purecounter-duration={2}
                         className="purecounter"
                       />
+                      35+
                     </div>
                     <div className="achievement-label">Cities Covered</div>
                   </div>
@@ -315,6 +206,7 @@ export default function About() {
                         data-purecounter-duration={2}
                         className="purecounter"
                       />
+                      127
                     </div>
                     <div className="achievement-label">Industry Awards</div>
                   </div>
@@ -332,9 +224,8 @@ export default function About() {
                   <div className="section-header text-center mb-5">
                     <h3>Our Journey of Excellence</h3>
                     <p>
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                      voluptatem accusantium doloremque laudantium totam rem
-                      aperiam.
+                      From our humble beginnings to becoming a market leader,
+                      every milestone represents our commitment to you.
                     </p>
                   </div>
                   <div className="timeline">
@@ -347,9 +238,8 @@ export default function About() {
                       <div className="timeline-content">
                         <h4>Company Founded</h4>
                         <p>
-                          Ut enim ad minim veniam, quis nostrud exercitation
-                          ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat.
+                          UrbanEstate was established with a vision to redefine
+                          property services through transparency and innovation.
                         </p>
                       </div>
                     </div>
@@ -362,8 +252,8 @@ export default function About() {
                       <div className="timeline-content">
                         <h4>1000th Property Milestone</h4>
                         <p>
-                          Duis aute irure dolor in reprehenderit in voluptate
-                          velit esse cillum dolore eu fugiat nulla pariatur.
+                          Detailed market analysis and dedicated service led us
+                          to successfully close our 1000th property deal.
                         </p>
                       </div>
                     </div>
@@ -376,9 +266,9 @@ export default function About() {
                       <div className="timeline-content">
                         <h4>Digital Innovation Launch</h4>
                         <p>
-                          Excepteur sint occaecat cupidatat non proident, sunt
-                          in culpa qui officia deserunt mollit anim id est
-                          laborum.
+                          We launched our state-of-the-art digital platform,
+                          making property search and management easier than
+                          ever.
                         </p>
                       </div>
                     </div>
@@ -391,9 +281,9 @@ export default function About() {
                       <div className="timeline-content">
                         <h4>Regional Expansion</h4>
                         <p>
-                          At vero eos et accusamus et iusto odio dignissimos
-                          ducimus qui blanditiis praesentium voluptatum
-                          deleniti.
+                          Expanded our operations to 5 new major cities,
+                          bringing UrbanEstate's premium service to a wider
+                          audience.
                         </p>
                       </div>
                     </div>
@@ -411,9 +301,9 @@ export default function About() {
                 <div className="col-lg-8 text-center">
                   <h3>Meet Our Expert Team</h3>
                   <p className="team-description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua quis nostrud exercitation.
+                    Our team of seasoned professionals is passionate about real
+                    estate and dedicated to achieving the best results for our
+                    clients.
                   </p>
                   <div className="team-grid">
                     <div className="row justify-content-center">
@@ -457,9 +347,9 @@ export default function About() {
                       </div>
                     </div>
                   </div>
-                  <a href="team.html" className="view-team-btn">
+                  <Link href="/agents" className="view-team-btn">
                     View Full Team
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -468,207 +358,6 @@ export default function About() {
         </section>
         {/* /About Section */}
       </main>
-      <footer id="footer" className="footer position-relative">
-        <div className="container">
-          <div className="row gy-5">
-            <div className="col-lg-4">
-              <div className="footer-content">
-                <a
-                  href="index.html"
-                  className="logo d-flex align-items-center mb-4"
-                >
-                  <span className="sitename">TheProperty</span>
-                </a>
-                <p className="mb-4">
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia curae. Donec velit neque auctor sit
-                  amet aliquam vel ullamcorper sit amet ligula.
-                </p>
-                <div className="newsletter-form">
-                  <h5>Stay Updated</h5>
-                  <form
-                    action="forms/newsletter.php"
-                    method="post"
-                    className="php-email-form"
-                  >
-                    <div className="input-group">
-                      <input
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Enter your email"
-                        required=""
-                      />
-                      <button type="submit" className="btn-subscribe">
-                        <i className="bi bi-send" />
-                      </button>
-                    </div>
-                    <div className="loading">Loading</div>
-                    <div className="error-message" />
-                    <div className="sent-message">
-                      Thank you for subscribing!
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-2 col-6">
-              <div className="footer-links">
-                <h4>Company</h4>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> About
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Careers
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Press
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-lg-2 col-6">
-              <div className="footer-links">
-                <h4>Solutions</h4>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Digital Strategy
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Cloud Computing
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Data Analytics
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> AI Solutions
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Cybersecurity
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="footer-contact">
-                <h4>Get in Touch</h4>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-geo-alt" />
-                  </div>
-                  <div className="contact-info">
-                    <p>
-                      2847 Maple Avenue
-                      <br />
-                      Los Angeles, CA 90210
-                      <br />
-                      United States
-                    </p>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-telephone" />
-                  </div>
-                  <div className="contact-info">
-                    <p>+1 (555) 987-6543</p>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-envelope" />
-                  </div>
-                  <div className="contact-info">
-                    <p>contact@example.com</p>
-                  </div>
-                </div>
-                <div className="social-links">
-                  <a href="#">
-                    <i className="bi bi-facebook" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-twitter-x" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-linkedin" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-youtube" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-github" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-lg-6">
-                <div className="copyright">
-                  <p>
-                    © <span>Copyright</span>{" "}
-                    <strong className="px-1 sitename">MyWebsite</strong>{" "}
-                    <span>All Rights Reserved</span>
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="footer-bottom-links">
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Terms of Service</a>
-                  <a href="#">Cookie Policy</a>
-                </div>
-                <div className="credits">
-                  {/* All the links in the footer should remain intact. */}
-                  {/* You can delete the links only if you've purchased the pro version. */}
-                  {/* Licensing information: https://bootstrapmade.com/license/ */}
-                  {/* Purchase the pro version with working PHP/AJAX contact form: [buy-url] */}
-                  Designed by{" "}
-                  <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-      {/* Scroll Top */}
-      <a
-        href="#"
-        id="scroll-top"
-        className="scroll-top d-flex align-items-center justify-content-center"
-      >
-        <i className="bi bi-arrow-up-short" />
-      </a>
     </div>
   );
 }

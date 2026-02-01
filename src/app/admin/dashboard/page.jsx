@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboardStats } from "@/redux/slices/dashboardSlice";
 import { format } from "date-fns";
 import Link from "next/link";
+import TopTitle from "@/components/TopTitle";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export default function Dashboard() {
 
   return (
     <div className="container-fluid py-4">
+      <TopTitle title="Admin: Dashboard | UrbanEstate" />
       {/* Page Title */}
       <div className="mb-4 d-flex justify-content-between align-items-center">
         <div>
@@ -67,10 +69,10 @@ export default function Dashboard() {
           color="warning"
         />
         <StatCard
-          title="Closed Deals"
-          value={stats.convertedLeads}
-          icon="bi-check-circle"
-          color="success"
+          title="Subscribers"
+          value={stats.totalSubscribers}
+          icon="bi-envelope-check"
+          color="danger"
         />
       </div>
 

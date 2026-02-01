@@ -4,8 +4,25 @@ import { slugify } from "@/lib/slugify";
 
 export async function POST(request) {
   try {
-    const { title, slug, price, location, type, status, images, description } =
-      await request.json();
+    const {
+      title,
+      slug,
+      price,
+      location,
+      type,
+      listingType,
+      status,
+      images,
+      description,
+      beds,
+      baths,
+      sqft,
+      isFeatured,
+      garage,
+      swimmingPool,
+      balcony,
+      garden,
+    } = await request.json();
 
     if (!title || !slug || !price || !location || !type || !status || !images) {
       return NextResponse.json(
@@ -34,9 +51,18 @@ export async function POST(request) {
         price,
         location,
         type,
+        listingType: listingType || "SALE",
         status,
         images,
         description,
+        beds: beds ? parseInt(beds) : null,
+        baths: baths ? parseInt(baths) : null,
+        sqft: sqft ? parseInt(sqft) : null,
+        isFeatured: isFeatured === true || isFeatured === "true",
+        garage: garage === true || garage === "true",
+        swimmingPool: swimmingPool === true || swimmingPool === "true",
+        balcony: balcony === true || balcony === "true",
+        garden: garden === true || garden === "true",
       },
     });
 
@@ -58,21 +84,120 @@ export async function POST(request) {
 }
 
 /**
- * GET ALL PROPERTIES
+ * GET ALL PROPERTIES (with optional filters)
  */
-export async function GET() {
+export async function GET(request) {
   try {
-    const properties = await prisma.property.findMany({
-      include: {
-        leads: true,
-      },
-    });
+    // Extract query parameters from URL
+    const { searchParams } = new URL(request.url);
+    const location = searchParams.get("location");
+    const type = searchParams.get("type");
+    const listingType = searchParams.get("listingType");
+    const minPrice = searchParams.get("minPrice");
+    const maxPrice = searchParams.get("maxPrice");
+    const beds = searchParams.get("beds");
+    const baths = searchParams.get("baths");
+    const sortBy = searchParams.get("sortBy");
+
+    // Build dynamic where clause
+    const where = {};
+
+    // Location filter (case-insensitive partial match)
+    if (location) {
+      where.location = {
+        contains: location,
+        mode: "insensitive",
+      };
+    }
+
+    // Property type filter (exact match)
+    if (type) {
+      where.type = type;
+    }
+
+    // Listing type filter (exact match)
+    if (listingType) {
+      where.listingType = listingType;
+    }
+
+    // Price range filter
+    if (minPrice || maxPrice) {
+      where.price = {};
+      if (minPrice) {
+        where.price.gte = parseInt(minPrice);
+      }
+      if (maxPrice) {
+        where.price.lte = parseInt(maxPrice);
+      }
+    }
+
+    // Bedrooms filter
+    if (beds) {
+      where.beds = { gte: parseInt(beds) };
+    }
+
+    // Bathrooms filter
+    if (baths) {
+      where.baths = { gte: parseInt(baths) };
+    }
+
+    // Amenity filters
+    const garage = searchParams.get("garage");
+    if (garage === "true") where.garage = true;
+
+    const swimmingPool = searchParams.get("swimmingPool");
+    if (swimmingPool === "true") where.swimmingPool = true;
+
+    const balcony = searchParams.get("balcony");
+    if (balcony === "true") where.balcony = true;
+
+    const garden = searchParams.get("garden");
+    if (garden === "true") where.garden = true;
+
+    // Featured filter
+    const isFeatured = searchParams.get("isFeatured");
+    if (isFeatured === "true") {
+      where.isFeatured = true;
+    }
+
+    // Pagination
+    const page = parseInt(searchParams.get("page")) || 1;
+    const limit = parseInt(searchParams.get("limit")) || 6;
+    const skip = (page - 1) * limit;
+
+    // Sorting logic
+    let orderBy = { createdAt: "desc" }; // Default sort
+    if (sortBy === "price-low") {
+      orderBy = { price: "asc" };
+    } else if (sortBy === "price-high") {
+      orderBy = { price: "desc" };
+    } else if (sortBy === "newest") {
+      orderBy = { createdAt: "desc" };
+    }
+
+    const [total, properties] = await Promise.all([
+      prisma.property.count({ where }),
+      prisma.property.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy,
+        include: {
+          leads: true,
+        },
+      }),
+    ]);
 
     return NextResponse.json(
       {
-        message: "Properties fetched successfully",
-        data: properties,
         success: true,
+        data: properties,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+        },
       },
       { status: 200 },
     );
@@ -141,9 +266,18 @@ export async function PATCH(request) {
       price,
       location,
       type,
+      listingType,
       status,
       images,
       description,
+      beds,
+      baths,
+      sqft,
+      isFeatured,
+      garage,
+      swimmingPool,
+      balcony,
+      garden,
     } = await request.json();
 
     if (!id) {
@@ -153,18 +287,35 @@ export async function PATCH(request) {
       );
     }
 
+    const data = {
+      title,
+      slug,
+      price,
+      location,
+      type,
+      listingType,
+      status,
+      images,
+      description,
+    };
+
+    if (beds !== undefined) data.beds = beds ? parseInt(beds) : null;
+    if (baths !== undefined) data.baths = baths ? parseInt(baths) : null;
+    if (sqft !== undefined) data.sqft = sqft ? parseInt(sqft) : null;
+    if (isFeatured !== undefined)
+      data.isFeatured = isFeatured === true || isFeatured === "true";
+    if (garage !== undefined)
+      data.garage = garage === true || garage === "true";
+    if (swimmingPool !== undefined)
+      data.swimmingPool = swimmingPool === true || swimmingPool === "true";
+    if (balcony !== undefined)
+      data.balcony = balcony === true || balcony === "true";
+    if (garden !== undefined)
+      data.garden = garden === true || garden === "true";
+
     const property = await prisma.property.update({
       where: { id },
-      data: {
-        title,
-        slug,
-        price,
-        location,
-        type,
-        status,
-        images,
-        description,
-      },
+      data,
     });
 
     return NextResponse.json(

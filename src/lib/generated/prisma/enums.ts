@@ -26,6 +26,14 @@ export const PropertyStatus = {
 export type PropertyStatus = (typeof PropertyStatus)[keyof typeof PropertyStatus]
 
 
+export const ListingType = {
+  SALE: 'SALE',
+  RENT: 'RENT'
+} as const
+
+export type ListingType = (typeof ListingType)[keyof typeof ListingType]
+
+
 export const LeadStatus = {
   new: 'new',
   contact: 'contact',

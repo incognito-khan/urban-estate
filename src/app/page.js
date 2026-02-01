@@ -1,125 +1,130 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getProperties } from "@/redux/slices/propertySlice";
+import { fetchPublicStats } from "@/redux/slices/publicSlice";
+import TopTitle from "@/components/TopTitle";
+import { services } from "@/data/services";
+
 export default function Home() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  // Search filters state
+  const [searchFilters, setSearchFilters] = useState({
+    location: "",
+    type: "",
+    priceRange: "",
+    beds: "",
+    baths: "",
+  });
+
+  const { properties, loading: propLoading } = useSelector(
+    (state) => state.property,
+  );
+  const { stats, loading: statsLoading } = useSelector((state) => state.public);
+
+  // Safe fallback values for stats
+  const safeStats = {
+    totalProperties: stats?.totalProperties || 0,
+    verifiedAgents: stats?.verifiedAgents || 0,
+    clientSatisfaction: stats?.clientSatisfaction || 0,
+    awardsWon: stats?.awardsWon || 0,
+    activeListings: stats?.activeListings || 0,
+  };
+
+  // Display properties logic - Always show featured properties on Home
+  const featuredProperties = properties.filter((p) => p.isFeatured).slice(0, 7);
+  const displayProperties =
+    featuredProperties.length > 0 ? featuredProperties : properties.slice(0, 7);
+
+  useEffect(() => {
+    dispatch(getProperties());
+    dispatch(fetchPublicStats());
+  }, [dispatch]);
+
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle search form submission
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    // Build query string
+    const queryParams = new URLSearchParams();
+    if (searchFilters.location)
+      queryParams.append("location", searchFilters.location);
+    if (searchFilters.type) queryParams.append("type", searchFilters.type);
+
+    // Parse price range for query params
+    if (searchFilters.priceRange) {
+      const priceRange = searchFilters.priceRange;
+      if (priceRange.includes("-")) {
+        const [min, max] = priceRange.split("-");
+        queryParams.append("minPrice", min);
+        queryParams.append("maxPrice", max);
+      } else if (priceRange.includes("+")) {
+        queryParams.append("minPrice", priceRange.replace("+", ""));
+      }
+    }
+
+    if (searchFilters.beds) queryParams.append("beds", searchFilters.beds);
+    if (searchFilters.baths) queryParams.append("baths", searchFilters.baths);
+
+    router.push(`/properties?${params.toString()}`);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    filterProperties();
+  };
+
+  // Clear filters
+  const handleClearFilters = () => {
+    setSearchFilters({
+      location: "",
+      type: "",
+      priceRange: "",
+      beds: "",
+      baths: "",
+      listingType: "SALE",
+    });
+    // setIsSearchActive(false); // This line was commented out or not present in the original snippet, keeping it consistent.
+    dispatch(getProperties());
+  };
+
+  const loading = propLoading || statsLoading;
+
+  console.log(displayProperties, "displayProperties");
+  console.log(stats, "stats");
+  console.log(properties, "properties");
+
+  // Loading spinner component
+  const LoadingSpinner = () => (
+    <div className="d-flex justify-content-center align-items-center py-5">
+      <div
+        className="spinner-border text-primary"
+        role="status"
+        style={{ width: "3rem", height: "3rem" }}
+      >
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+
   return (
     <div>
-      <header
-        id="header"
-        className="header d-flex align-items-center fixed-top"
-      >
-        <div className="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-          <a
-            href="index.html"
-            className="logo d-flex align-items-center me-auto me-xl-0"
-          >
-            {/* Uncomment the line below if you also wish to use an image logo */}
-            {/* <img src="/assets/img/logo.webp" alt=""> */}
-            <h1 className="sitename">TheProperty</h1>
-          </a>
-          <nav id="navmenu" className="navmenu">
-            <ul>
-              <li>
-                <a href="index.html" className="active">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/about">About</a>
-              </li>
-              <li>
-                <a href="properties.html">Properties</a>
-              </li>
-              <li>
-                <a href="services.html">Services</a>
-              </li>
-              <li>
-                <a href="agents.html">Agents</a>
-              </li>
-              <li>
-                <a href="blog.html">Blog</a>
-              </li>
-              <li className="dropdown">
-                <a href="#">
-                  <span>More Pages</span>{" "}
-                  <i className="bi bi-chevron-down toggle-dropdown" />
-                </a>
-                <ul>
-                  <li>
-                    <a href="property-details.html">Property Details</a>
-                  </li>
-                  <li>
-                    <a href="service-details.html">Service Details</a>
-                  </li>
-                  <li>
-                    <a href="agent-profile.html">Agent Profile</a>
-                  </li>
-                  <li>
-                    <a href="blog-details.html">Blog Details</a>
-                  </li>
-                  <li>
-                    <a href="terms.html">Terms</a>
-                  </li>
-                  <li>
-                    <a href="privacy.html">Privacy</a>
-                  </li>
-                  <li>
-                    <a href="404.html">404</a>
-                  </li>
-                </ul>
-              </li>
-              <li className="dropdown">
-                <a href="#">
-                  <span>Dropdown</span>{" "}
-                  <i className="bi bi-chevron-down toggle-dropdown" />
-                </a>
-                <ul>
-                  <li>
-                    <a href="#">Dropdown 1</a>
-                  </li>
-                  <li className="dropdown">
-                    <a href="#">
-                      <span>Deep Dropdown</span>{" "}
-                      <i className="bi bi-chevron-down toggle-dropdown" />
-                    </a>
-                    <ul>
-                      <li>
-                        <a href="#">Deep Dropdown 1</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 2</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 3</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 4</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 5</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 2</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 3</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 4</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="contact.html">Contact</a>
-              </li>
-            </ul>
-            <i className="mobile-nav-toggle d-xl-none bi bi-list" />
-          </nav>
-          <a className="btn-getstarted" href="properties.html">
-            Get Started
-          </a>
-        </div>
-      </header>
-      <main className="main">
+      <TopTitle title="Home | UrbanEstate" />
+      <main className="main pt-5 mt-5">
         {/* Hero Section */}
         <section id="hero" className="hero section">
           <div className="container" data-aos="fade-up" data-aos-delay={100}>
@@ -146,7 +151,34 @@ export default function Home() {
                     data-aos="fade-up"
                     data-aos-delay={300}
                   >
-                    <form action="">
+                    <form onSubmit={handleSubmit}>
+                      {/* BUY / RENT TOGGLE */}
+                      <div className="d-flex gap-2 mb-3">
+                        <button
+                          type="button"
+                          className={`btn ${searchFilters.listingType === "SALE" ? "btn-primary" : "btn-light"}`}
+                          onClick={() =>
+                            setSearchFilters((prev) => ({
+                              ...prev,
+                              listingType: "SALE",
+                            }))
+                          }
+                        >
+                          Buy
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn ${searchFilters.listingType === "RENT" ? "btn-primary" : "btn-light"}`}
+                          onClick={() =>
+                            setSearchFilters((prev) => ({
+                              ...prev,
+                              listingType: "RENT",
+                            }))
+                          }
+                        >
+                          Rent
+                        </button>
+                      </div>
                       <div className="row g-3">
                         <div className="col-12">
                           <div className="form-floating">
@@ -155,7 +187,9 @@ export default function Home() {
                               className="form-control"
                               id="location"
                               name="location"
-                              required=""
+                              value={searchFilters.location}
+                              onChange={handleInputChange}
+                              placeholder="Enter city or area"
                             />
                             <label htmlFor="location">Location</label>
                           </div>
@@ -165,15 +199,14 @@ export default function Home() {
                             <select
                               className="form-select"
                               id="property-type"
-                              name="property_type"
-                              required=""
+                              name="type"
+                              value={searchFilters.type}
+                              onChange={handleInputChange}
                             >
                               <option value="">Select Type</option>
-                              <option value="house">House</option>
-                              <option value="apartment">Apartment</option>
-                              <option value="condo">Condo</option>
-                              <option value="townhouse">Townhouse</option>
-                              <option value="land">Land</option>
+                              <option value="House">House</option>
+                              <option value="Apartment">Apartment</option>
+                              <option value="Plot">Plot</option>
                             </select>
                             <label htmlFor="property-type">Property Type</label>
                           </div>
@@ -183,8 +216,9 @@ export default function Home() {
                             <select
                               className="form-select"
                               id="price-range"
-                              name="price_range"
-                              required=""
+                              name="priceRange"
+                              value={searchFilters.priceRange}
+                              onChange={handleInputChange}
                             >
                               <option value="">Price Range</option>
                               <option value="0-200000">Under $200K</option>
@@ -207,13 +241,15 @@ export default function Home() {
                             <select
                               className="form-select"
                               id="bedrooms"
-                              name="bedrooms"
+                              name="beds"
+                              value={searchFilters.beds}
+                              onChange={handleInputChange}
                             >
                               <option value="">Bedrooms</option>
-                              <option value={1}>1 Bedroom</option>
-                              <option value={2}>2 Bedrooms</option>
-                              <option value={3}>3 Bedrooms</option>
-                              <option value={4}>4 Bedrooms</option>
+                              <option value="1">1 Bedroom</option>
+                              <option value="2">2 Bedrooms</option>
+                              <option value="3">3 Bedrooms</option>
+                              <option value="4">4 Bedrooms</option>
                               <option value="5+">5+ Bedrooms</option>
                             </select>
                             <label htmlFor="bedrooms">Bedrooms</label>
@@ -224,24 +260,36 @@ export default function Home() {
                             <select
                               className="form-select"
                               id="bathrooms"
-                              name="bathrooms"
+                              name="baths"
+                              value={searchFilters.baths}
+                              onChange={handleInputChange}
                             >
                               <option value="">Bathrooms</option>
-                              <option value={1}>1 Bathroom</option>
-                              <option value={2}>2 Bathrooms</option>
-                              <option value={3}>3 Bathrooms</option>
+                              <option value="1">1 Bathroom</option>
+                              <option value="2">2 Bathrooms</option>
+                              <option value="3">3 Bathrooms</option>
                               <option value="4+">4+ Bathrooms</option>
                             </select>
                             <label htmlFor="bathrooms">Bathrooms</label>
                           </div>
                         </div>
-                        <div className="col-12">
+                        <div className="col-md-6">
                           <button
                             type="submit"
                             className="btn btn-search w-100"
                           >
                             <i className="bi bi-search" />
                             Search Properties
+                          </button>
+                        </div>
+                        <div className="col-md-6">
+                          <button
+                            type="button"
+                            onClick={handleClearFilters}
+                            className="btn btn-outline-secondary w-100"
+                          >
+                            <i className="bi bi-x-circle" />
+                            Clear Filters
                           </button>
                         </div>
                       </div>
@@ -256,13 +304,7 @@ export default function Home() {
                       <div className="col-4">
                         <div className="stat-item">
                           <h3>
-                            <span
-                              data-purecounter-start={0}
-                              data-purecounter-end={2847}
-                              data-purecounter-duration={1}
-                              className="purecounter"
-                            />
-                            +
+                            <span>{safeStats.totalProperties}</span>+
                           </h3>
                           <p>Properties Listed</p>
                         </div>
@@ -270,13 +312,7 @@ export default function Home() {
                       <div className="col-4">
                         <div className="stat-item">
                           <h3>
-                            <span
-                              data-purecounter-start={0}
-                              data-purecounter-end={156}
-                              data-purecounter-duration={1}
-                              className="purecounter"
-                            />
-                            +
+                            <span>{safeStats.verifiedAgents}</span>+
                           </h3>
                           <p>Verified Agents</p>
                         </div>
@@ -284,13 +320,7 @@ export default function Home() {
                       <div className="col-4">
                         <div className="stat-item">
                           <h3>
-                            <span
-                              data-purecounter-start={0}
-                              data-purecounter-end={98}
-                              data-purecounter-duration={1}
-                              className="purecounter"
-                            />
-                            %
+                            <span>{safeStats.clientSatisfaction}</span>%
                           </h3>
                           <p>Client Satisfaction</p>
                         </div>
@@ -430,13 +460,7 @@ export default function Home() {
                       data-aos-delay={400}
                     >
                       <div className="stat-number">
-                        <span
-                          data-purecounter-start={0}
-                          data-purecounter-end={2800}
-                          data-purecounter-duration={2}
-                          className="purecounter"
-                        />
-                        +
+                        <span>{safeStats.totalProperties}</span>+
                       </div>
                       <div className="stat-label">Properties Listed</div>
                     </div>
@@ -521,337 +545,256 @@ export default function Home() {
           </div>
           {/* End Section Title */}
           <div className="container" data-aos="fade-up" data-aos-delay={100}>
-            <div
-              className="grid-featured"
-              data-aos="zoom-in"
-              data-aos-delay={150}
-            >
-              <article className="highlight-card">
-                <div className="media">
-                  <div className="badge-set">
-                    <span className="flag featured">Featured</span>
-                    <span className="flag premium">Premium</span>
-                  </div>
-                  <a href="property-details.html" className="image-link">
-                    <img
-                      src="/assets/img/real-estate/property-exterior-6.webp"
-                      alt="Showcase Villa"
-                      className="img-fluid"
-                    />
-                  </a>
-                  <div className="quick-specs">
-                    <span>
-                      <i className="bi bi-door-open" /> 5 Beds
-                    </span>
-                    <span>
-                      <i className="bi bi-droplet" /> 4 Baths
-                    </span>
-                    <span>
-                      <i className="bi bi-aspect-ratio" /> 4,900 sq ft
-                    </span>
-                  </div>
-                </div>
-                <div className="content">
-                  <div className="top">
-                    <div>
-                      <h3>
-                        <a href="property-details.html">
-                          Seaside Villa with Infinity Pool
-                        </a>
-                      </h3>
-                      <div className="loc">
-                        <i className="bi bi-geo-alt-fill" /> Coronado, CA 92118
+            {loading ? (
+              <LoadingSpinner />
+            ) : (
+              <>
+                <div className="grid-featured">
+                  {displayProperties.length > 0 ? (
+                    <>
+                      {/* Highlight Card (First Property) */}
+                      <article className="highlight-card">
+                        <div className="media">
+                          <div className="badge-set">
+                            <span className="flag featured">Featured</span>
+                            <span className="flag premium">
+                              {displayProperties[0].type}
+                            </span>
+                          </div>
+                          <Link
+                            href={`/properties/${displayProperties[0].id}`}
+                            className="image-link"
+                          >
+                            <img
+                              src={
+                                displayProperties[0].images?.[0] ||
+                                "/assets/img/real-estate/property-exterior-6.webp"
+                              }
+                              alt={displayProperties[0].title}
+                              className="img-fluid"
+                            />
+                          </Link>
+                          <div className="quick-specs">
+                            <span>
+                              <i className="bi bi-door-open" />{" "}
+                              {displayProperties[0].beds || 0}{" "}
+                              {displayProperties[0].beds === 1 ? "Bed" : "Beds"}
+                            </span>
+                            <span>
+                              <i className="bi bi-droplet" />{" "}
+                              {displayProperties[0].baths || 0}{" "}
+                              {displayProperties[0].baths === 1
+                                ? "Bath"
+                                : "Baths"}
+                            </span>
+                            {displayProperties[0].sqft && (
+                              <span>
+                                <i className="bi bi-aspect-ratio" />{" "}
+                                {displayProperties[0].sqft.toLocaleString()} sq
+                                ft
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="content">
+                          <div className="top">
+                            <div>
+                              <h3>
+                                <Link
+                                  href={`/properties/${displayProperties[0].id}`}
+                                >
+                                  {displayProperties[0].title}
+                                </Link>
+                              </h3>
+                              <div className="loc">
+                                <i className="bi bi-geo-alt-fill" />{" "}
+                                {displayProperties[0].location}
+                              </div>
+                            </div>
+                            <div className="price">
+                              ${displayProperties[0].price?.toLocaleString()}
+                            </div>
+                          </div>
+                          <p className="excerpt">
+                            {displayProperties[0].description?.substring(
+                              0,
+                              150,
+                            )}
+                            ...
+                          </p>
+                          <div className="cta">
+                            <Link
+                              href={`/properties/${displayProperties[0].id}`}
+                              className="btn-main"
+                            >
+                              Arrange Visit
+                            </Link>
+                            <Link
+                              href={`/properties/${displayProperties[0].id}`}
+                              className="btn-soft"
+                            >
+                              More Photos
+                            </Link>
+                            <div className="meta">
+                              <span
+                                className={`${displayProperties[0].status === "sold" ? "status sold" : "status for-sale"}`}
+                              >
+                                {displayProperties[0].status === "sold"
+                                  ? "Sold"
+                                  : "For Sale"}
+                              </span>
+                              <span className="listed">
+                                Listed{" "}
+                                {new Date(
+                                  displayProperties[0].createdAt,
+                                ).toLocaleDateString()}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+
+                      {/* Mini List (Remaining Properties) */}
+                      <div className="mini-list">
+                        {displayProperties.slice(1, 4).map((prop, index) => (
+                          <article
+                            key={prop.id}
+                            className="mini-card"
+                            data-aos="fade-up"
+                            data-aos-delay={200 + index * 50}
+                          >
+                            <Link
+                              href={`/properties/${prop.id}`}
+                              className="thumb"
+                            >
+                              <img
+                                src={
+                                  prop.images?.[0] ||
+                                  "/assets/img/real-estate/property-interior-2.webp"
+                                }
+                                alt={prop.title}
+                                className="img-fluid"
+                                loading="lazy"
+                              />
+                              <span className="label new">
+                                <i className="bi bi-star-fill" /> {prop.status}
+                              </span>
+                            </Link>
+                            <div className="mini-body">
+                              <h4>
+                                <Link href={`/properties/${prop.id}`}>
+                                  {prop.title}
+                                </Link>
+                              </h4>
+                              <div className="mini-loc">
+                                <i className="bi bi-geo" /> {prop.location}
+                              </div>
+                              <div className="mini-specs">
+                                <span>
+                                  <i className="bi bi-door-open" />{" "}
+                                  {prop.beds || 0}
+                                </span>
+                                <span>
+                                  <i className="bi bi-droplet" />{" "}
+                                  {prop.baths || 0}
+                                </span>
+                                {prop.sqft && (
+                                  <span>
+                                    <i className="bi bi-aspect-ratio" />{" "}
+                                    {prop.sqft.toLocaleString()}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="mini-foot">
+                                <div className="mini-price">
+                                  ${prop.price?.toLocaleString()}
+                                </div>
+                                <Link
+                                  href={`/properties/${prop.id}`}
+                                  className="mini-btn"
+                                >
+                                  Details
+                                </Link>
+                              </div>
+                            </div>
+                          </article>
+                        ))}
                       </div>
+                    </>
+                  ) : (
+                    <div className="text-center py-5">
+                      <p>No featured properties available at the moment.</p>
                     </div>
-                    <div className="price">$3,760,000</div>
-                  </div>
-                  <p className="excerpt">
-                    Praesent commodo cursus magna, fusce dapibus tellus ac
-                    cursus commodo, vestibulum id ligula porta felis euismod
-                    semper.
-                  </p>
-                  <div className="cta">
-                    <a href="property-details.html" className="btn-main">
-                      Arrange Visit
-                    </a>
-                    <a href="property-details.html" className="btn-soft">
-                      More Photos
-                    </a>
-                    <div className="meta">
-                      <span className="status for-sale">For Sale</span>
-                      <span className="listed">Listed 2 days ago</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
-              </article>
-              {/* End Highlight Card */}
-              <div className="mini-list">
-                <article
-                  className="mini-card"
-                  data-aos="fade-up"
-                  data-aos-delay={200}
-                >
-                  <a href="property-details.html" className="thumb">
-                    <img
-                      src="/assets/img/real-estate/property-interior-2.webp"
-                      alt="Loft Haven"
-                      className="img-fluid"
-                      loading="lazy"
-                    />
-                    <span className="label hot">
-                      <i className="bi bi-lightning-charge-fill" /> Hot
-                    </span>
-                  </a>
-                  <div className="mini-body">
-                    <h4>
-                      <a href="property-details.html">
-                        Urban Loft with Skyline Views
-                      </a>
-                    </h4>
-                    <div className="mini-loc">
-                      <i className="bi bi-geo" /> Denver, CO 80203
+
+                {/* Bottom Row (More Featured) */}
+                <div className="row gy-4 mt-4">
+                  {displayProperties.slice(4, 7).map((prop, index) => (
+                    <div
+                      key={prop.id}
+                      className="col-lg-4"
+                      data-aos="fade-up"
+                      data-aos-delay={300 + index * 50}
+                    >
+                      <article className="stack-card">
+                        <figure className="stack-media">
+                          <img
+                            src={
+                              prop.images?.[0] ||
+                              "/assets/img/real-estate/property-exterior-8.webp"
+                            }
+                            alt={prop.title}
+                            className="img-fluid"
+                            loading="lazy"
+                          />
+                          <figcaption>
+                            <span className="chip exclusive">
+                              {prop.listingType === "RENT"
+                                ? "For Rent"
+                                : "For Sale"}
+                            </span>
+                          </figcaption>
+                        </figure>
+                        <div className="stack-body">
+                          <h5>
+                            <Link href={`/properties/${prop.id}`}>
+                              {prop.title}
+                            </Link>
+                          </h5>
+                          <div className="stack-loc">
+                            <i className="bi bi-geo-alt" /> {prop.location}
+                          </div>
+                          <ul className="stack-specs">
+                            <li>
+                              <i className="bi bi-door-open" /> {prop.beds || 0}
+                            </li>
+                            <li>
+                              <i className="bi bi-droplet" /> {prop.baths || 0}
+                            </li>
+                            <li>
+                              <i className="bi bi-aspect-ratio" />{" "}
+                              {prop.sqft || 0} sq ft
+                            </li>
+                          </ul>
+                          <div className="stack-foot">
+                            <span className="stack-price">
+                              ${prop.price?.toLocaleString()}
+                            </span>
+                            <Link
+                              href={`/properties/${prop.id}`}
+                              className="stack-link"
+                            >
+                              View
+                            </Link>
+                          </div>
+                        </div>
+                      </article>
                     </div>
-                    <div className="mini-specs">
-                      <span>
-                        <i className="bi bi-door-open" /> 2
-                      </span>
-                      <span>
-                        <i className="bi bi-droplet" /> 2
-                      </span>
-                      <span>
-                        <i className="bi bi-rulers" /> 1,450 sq ft
-                      </span>
-                    </div>
-                    <div className="mini-foot">
-                      <div className="mini-price">$689,000</div>
-                      <a href="property-details.html" className="mini-btn">
-                        Details
-                      </a>
-                    </div>
-                  </div>
-                </article>
-                {/* End Mini Card */}
-                <article
-                  className="mini-card"
-                  data-aos="fade-up"
-                  data-aos-delay={250}
-                >
-                  <a href="property-details.html" className="thumb">
-                    <img
-                      src="/assets/img/real-estate/property-exterior-3.webp"
-                      alt="Suburban Home"
-                      className="img-fluid"
-                      loading="lazy"
-                    />
-                    <span className="label new">
-                      <i className="bi bi-star-fill" /> New
-                    </span>
-                  </a>
-                  <div className="mini-body">
-                    <h4>
-                      <a href="property-details.html">
-                        Charming Suburban Retreat
-                      </a>
-                    </h4>
-                    <div className="mini-loc">
-                      <i className="bi bi-geo" /> Austin, TX 78745
-                    </div>
-                    <div className="mini-specs">
-                      <span>
-                        <i className="bi bi-door-open" /> 4
-                      </span>
-                      <span>
-                        <i className="bi bi-droplet" /> 3
-                      </span>
-                      <span>
-                        <i className="bi bi-rulers" /> 2,350 sq ft
-                      </span>
-                    </div>
-                    <div className="mini-foot">
-                      <div className="mini-price">$545,000</div>
-                      <a href="property-details.html" className="mini-btn">
-                        Details
-                      </a>
-                    </div>
-                  </div>
-                </article>
-                {/* End Mini Card */}
-                <article
-                  className="mini-card"
-                  data-aos="fade-up"
-                  data-aos-delay={300}
-                >
-                  <a href="property-details.html" className="thumb">
-                    <img
-                      src="/assets/img/real-estate/property-interior-7.webp"
-                      alt="Penthouse"
-                      className="img-fluid"
-                      loading="lazy"
-                    />
-                    <span className="label featured">
-                      <i className="bi bi-gem" /> Featured
-                    </span>
-                  </a>
-                  <div className="mini-body">
-                    <h4>
-                      <a href="property-details.html">
-                        Glass-Roof Penthouse Suite
-                      </a>
-                    </h4>
-                    <div className="mini-loc">
-                      <i className="bi bi-geo" /> Miami, FL 33131
-                    </div>
-                    <div className="mini-specs">
-                      <span>
-                        <i className="bi bi-door-open" /> 3
-                      </span>
-                      <span>
-                        <i className="bi bi-droplet" /> 3
-                      </span>
-                      <span>
-                        <i className="bi bi-rulers" /> 2,120 sq ft
-                      </span>
-                    </div>
-                    <div className="mini-foot">
-                      <div className="mini-price">$1,290,000</div>
-                      <a href="property-details.html" className="mini-btn">
-                        Details
-                      </a>
-                    </div>
-                  </div>
-                </article>
-                {/* End Mini Card */}
-              </div>
-              {/* End Mini List */}
-            </div>
-            <div className="row gy-4 mt-4">
-              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={300}>
-                <article className="stack-card">
-                  <figure className="stack-media">
-                    <img
-                      src="/assets/img/real-estate/property-exterior-8.webp"
-                      alt="Modern Facade"
-                      className="img-fluid"
-                      loading="lazy"
-                    />
-                    <figcaption>
-                      <span className="chip exclusive">Exclusive</span>
-                    </figcaption>
-                  </figure>
-                  <div className="stack-body">
-                    <h5>
-                      <a href="property-details.html">
-                        Modern Courtyard Residence
-                      </a>
-                    </h5>
-                    <div className="stack-loc">
-                      <i className="bi bi-geo-alt" /> Scottsdale, AZ 85251
-                    </div>
-                    <ul className="stack-specs">
-                      <li>
-                        <i className="bi bi-door-open" /> 4
-                      </li>
-                      <li>
-                        <i className="bi bi-droplet" /> 3
-                      </li>
-                      <li>
-                        <i className="bi bi-aspect-ratio" /> 2,980 sq ft
-                      </li>
-                    </ul>
-                    <div className="stack-foot">
-                      <span className="stack-price">$1,025,000</span>
-                      <a href="property-details.html" className="stack-link">
-                        View
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={350}>
-                <article className="stack-card">
-                  <figure className="stack-media">
-                    <img
-                      src="/assets/img/real-estate/property-interior-10.webp"
-                      alt="Cozy Interior"
-                      className="img-fluid"
-                      loading="lazy"
-                    />
-                    <figcaption>
-                      <span className="chip hot">Hot</span>
-                    </figcaption>
-                  </figure>
-                  <div className="stack-body">
-                    <h5>
-                      <a href="property-details.html">
-                        Cozy Lakeview Townhouse
-                      </a>
-                    </h5>
-                    <div className="stack-loc">
-                      <i className="bi bi-geo-alt" /> Madison, WI 53703
-                    </div>
-                    <ul className="stack-specs">
-                      <li>
-                        <i className="bi bi-door-open" /> 3
-                      </li>
-                      <li>
-                        <i className="bi bi-droplet" /> 2
-                      </li>
-                      <li>
-                        <i className="bi bi-aspect-ratio" /> 1,780 sq ft
-                      </li>
-                    </ul>
-                    <div className="stack-foot">
-                      <span className="stack-price">$429,000</span>
-                      <a href="property-details.html" className="stack-link">
-                        View
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={400}>
-                <article className="stack-card">
-                  <figure className="stack-media">
-                    <img
-                      src="/assets/img/real-estate/property-exterior-10.webp"
-                      alt="Garden Home"
-                      className="img-fluid"
-                      loading="lazy"
-                    />
-                    <figcaption>
-                      <span className="chip new">New</span>
-                    </figcaption>
-                  </figure>
-                  <div className="stack-body">
-                    <h5>
-                      <a href="property-details.html">
-                        Garden Home Near Downtown
-                      </a>
-                    </h5>
-                    <div className="stack-loc">
-                      <i className="bi bi-geo-alt" /> Raleigh, NC 27601
-                    </div>
-                    <ul className="stack-specs">
-                      <li>
-                        <i className="bi bi-door-open" /> 3
-                      </li>
-                      <li>
-                        <i className="bi bi-droplet" /> 2
-                      </li>
-                      <li>
-                        <i className="bi bi-aspect-ratio" /> 1,920 sq ft
-                      </li>
-                    </ul>
-                    <div className="stack-foot">
-                      <span className="stack-price">$512,000</span>
-                      <a href="property-details.html" className="stack-link">
-                        View
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </section>
         {/* /Featured Properties Section */}
@@ -861,187 +804,68 @@ export default function Home() {
           <div className="container section-title" data-aos="fade-up">
             <h2>Featured Services</h2>
             <p>
-              Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-              consectetur velit
+              Explore our comprehensive real estate services designed to meet
+              all your property needs.
             </p>
           </div>
           {/* End Section Title */}
           <div className="container" data-aos="fade-up" data-aos-delay={100}>
             <div className="row g-4 justify-content-center">
-              <div
-                className="col-lg-3 col-md-6"
-                data-aos="zoom-in"
-                data-aos-delay={200}
-              >
-                <div className="service-card">
-                  <div className="service-header">
-                    <div className="service-icon">
-                      <i className="bi bi-search" />
+              {/* Display first 3 services dynamically */}
+              {services.slice(0, 3).map((service, index) => (
+                <div
+                  key={service.id}
+                  className="col-lg-4 col-md-6"
+                  data-aos="zoom-in"
+                  data-aos-delay={100 + index * 100}
+                >
+                  <div className="service-card">
+                    <div className="service-header">
+                      <div className="service-icon">
+                        <i className={`bi ${service.icon}`} />
+                      </div>
+                      <div className="service-number text-muted opacity-25 fw-bold fs-1">
+                        0{index + 1}
+                      </div>
                     </div>
-                    <div className="service-number">01</div>
-                  </div>
-                  <div className="service-content">
-                    <h3>
-                      <a href="service-details.html">Property Search</a>
-                    </h3>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-                      eiusmod tempor incididunt labore dolore magna
-                    </p>
-                    <ul className="service-features">
-                      <li>
-                        <i className="bi bi-check2" /> Advanced Search Filters
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> 360° Virtual Tours
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> Real-time Updates
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="service-action">
-                    <a href="service-details.html" className="service-btn">
-                      <span>Explore Properties</span>
-                      <i className="bi bi-arrow-right" />
-                    </a>
+                    <div className="service-content mt-3">
+                      <h3>
+                        <Link href={`/services/${service.id}`}>
+                          {service.title}
+                        </Link>
+                      </h3>
+                      <p>{service.shortDescription}</p>
+                      <ul className="service-features list-unstyled mt-3">
+                        {service.features.slice(0, 3).map((feature, idx) => (
+                          <li key={idx} className="mb-2">
+                            <i className="bi bi-check2 text-primary me-2" />{" "}
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <Link
+                        href={`/services/${service.id}`}
+                        className="service-link mt-3 d-inline-block"
+                      >
+                        Learn More <i className="bi bi-arrow-right" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* End Service Item */}
-              <div
-                className="col-lg-3 col-md-6"
-                data-aos="zoom-in"
-                data-aos-delay={300}
-              >
-                <div className="service-card featured">
-                  <div className="service-header">
-                    <div className="service-icon">
-                      <i className="bi bi-graph-up" />
-                    </div>
-                    <div className="service-number">02</div>
-                  </div>
-                  <div className="service-content">
-                    <h3>
-                      <a href="service-details.html">Market Analysis</a>
-                    </h3>
-                    <p>
-                      Ut enim ad minim veniam quis nostrud exercitation ullamco
-                      laboris nisi aliquip commodo consequat duis aute
-                    </p>
-                    <ul className="service-features">
-                      <li>
-                        <i className="bi bi-check2" /> Price Trend Reports
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> Investment Insights
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> Market Forecasting
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="service-action">
-                    <a href="service-details.html" className="service-btn">
-                      <span>Get Analysis</span>
-                      <i className="bi bi-arrow-right" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              {/* End Service Item */}
-              <div
-                className="col-lg-3 col-md-6"
-                data-aos="zoom-in"
-                data-aos-delay={400}
-              >
-                <div className="service-card">
-                  <div className="service-header">
-                    <div className="service-icon">
-                      <i className="bi bi-key" />
-                    </div>
-                    <div className="service-number">03</div>
-                  </div>
-                  <div className="service-content">
-                    <h3>
-                      <a href="service-details.html">Property Management</a>
-                    </h3>
-                    <p>
-                      Excepteur sint occaecat cupidatat non proident sunt culpa
-                      qui officia deserunt mollit anim laborum sed
-                    </p>
-                    <ul className="service-features">
-                      <li>
-                        <i className="bi bi-check2" /> Tenant Screening
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> Rental Collection
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> Maintenance Services
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="service-action">
-                    <a href="service-details.html" className="service-btn">
-                      <span>Manage Now</span>
-                      <i className="bi bi-arrow-right" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              {/* End Service Item */}
-              <div
-                className="col-lg-3 col-md-6"
-                data-aos="zoom-in"
-                data-aos-delay={500}
-              >
-                <div className="service-card">
-                  <div className="service-header">
-                    <div className="service-icon">
-                      <i className="bi bi-shield-check" />
-                    </div>
-                    <div className="service-number">04</div>
-                  </div>
-                  <div className="service-content">
-                    <h3>
-                      <a href="service-details.html">Legal Support</a>
-                    </h3>
-                    <p>
-                      Sed ut perspiciatis unde omnis iste natus error voluptatem
-                      accusantium doloremque laudantium totam rem aperiam
-                    </p>
-                    <ul className="service-features">
-                      <li>
-                        <i className="bi bi-check2" /> Contract Review
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> Title Verification
-                      </li>
-                      <li>
-                        <i className="bi bi-check2" /> Legal Documentation
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="service-action">
-                    <a href="service-details.html" className="service-btn">
-                      <span>Learn More</span>
-                      <i className="bi bi-arrow-right" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              {/* End Service Item */}
+              ))}
             </div>
             <div
               className="text-center"
               data-aos="fade-up"
               data-aos-delay={600}
             >
-              <a href="services.html" className="btn-all-services">
+              <Link
+                href="/services"
+                className="btn-all-services btn btn-outline-primary mt-4"
+              >
                 <span>Discover All Our Services</span>
-                <i className="bi bi-arrow-up-right" />
-              </a>
+                <i className="bi bi-arrow-up-right ms-2" />
+              </Link>
             </div>
           </div>
         </section>
@@ -1263,10 +1087,13 @@ export default function Home() {
               data-aos="fade-up"
               data-aos-delay={400}
             >
-              <a href="agents.html" className="explore-agents-btn">
-                <span>Explore All Our Agents</span>
-                <i className="bi bi-arrow-right-circle" />
-              </a>
+              <Link
+                href="/services"
+                className="btn-all-services btn btn-outline-primary mt-4"
+              >
+                <span>Discover All Our Services</span>
+                <i className="bi bi-arrow-up-right ms-2" />
+              </Link>
             </div>
           </div>
         </section>
@@ -1617,32 +1444,21 @@ export default function Home() {
                     data-aos-delay={600}
                   >
                     <div className="highlight-item">
-                      <span
-                        className="highlight-number purecounter"
-                        data-purecounter-start={0}
-                        data-purecounter-end={94}
-                        data-purecounter-duration={2}
-                      />
+                      <span className="highlight-number">
+                        {safeStats.clientSatisfaction}
+                      </span>
                       %<span className="highlight-label">Success Rate</span>
                     </div>
                     <div className="highlight-divider" />
                     <div className="highlight-item">
-                      <span
-                        className="highlight-number purecounter"
-                        data-purecounter-start={0}
-                        data-purecounter-end={1800}
-                        data-purecounter-duration={2}
-                      />
+                      <span className="highlight-number">
+                        {safeStats.totalProperties}
+                      </span>
                       +<span className="highlight-label">Properties Sold</span>
                     </div>
                     <div className="highlight-divider" />
                     <div className="highlight-item">
-                      <span
-                        className="highlight-number purecounter"
-                        data-purecounter-start={0}
-                        data-purecounter-end={24}
-                        data-purecounter-duration={2}
-                      />
+                      <span className="highlight-number">24</span>
                       /7
                       <span className="highlight-label">Support Available</span>
                     </div>
@@ -1886,211 +1702,6 @@ export default function Home() {
         </section>
         {/* /Call To Action Section */}
       </main>
-      <footer id="footer" className="footer position-relative">
-        <div className="container">
-          <div className="row gy-5">
-            <div className="col-lg-4">
-              <div className="footer-content">
-                <a
-                  href="index.html"
-                  className="logo d-flex align-items-center mb-4"
-                >
-                  <span className="sitename">TheProperty</span>
-                </a>
-                <p className="mb-4">
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia curae. Donec velit neque auctor sit
-                  amet aliquam vel ullamcorper sit amet ligula.
-                </p>
-                <div className="newsletter-form">
-                  <h5>Stay Updated</h5>
-                  <form
-                    action="forms/newsletter.php"
-                    method="post"
-                    className="php-email-form"
-                  >
-                    <div className="input-group">
-                      <input
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Enter your email"
-                        required=""
-                      />
-                      <button type="submit" className="btn-subscribe">
-                        <i className="bi bi-send" />
-                      </button>
-                    </div>
-                    <div className="loading">Loading</div>
-                    <div className="error-message" />
-                    <div className="sent-message">
-                      Thank you for subscribing!
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-2 col-6">
-              <div className="footer-links">
-                <h4>Company</h4>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> About
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Careers
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Press
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-lg-2 col-6">
-              <div className="footer-links">
-                <h4>Solutions</h4>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Digital Strategy
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Cloud Computing
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Data Analytics
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> AI Solutions
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Cybersecurity
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="footer-contact">
-                <h4>Get in Touch</h4>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-geo-alt" />
-                  </div>
-                  <div className="contact-info">
-                    <p>
-                      2847 Maple Avenue
-                      <br />
-                      Los Angeles, CA 90210
-                      <br />
-                      United States
-                    </p>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-telephone" />
-                  </div>
-                  <div className="contact-info">
-                    <p>+1 (555) 987-6543</p>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-envelope" />
-                  </div>
-                  <div className="contact-info">
-                    <p>contact@example.com</p>
-                  </div>
-                </div>
-                <div className="social-links">
-                  <a href="#">
-                    <i className="bi bi-facebook" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-twitter-x" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-linkedin" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-youtube" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-github" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-lg-6">
-                <div className="copyright">
-                  <p>
-                    © <span>Copyright</span>{" "}
-                    <strong className="px-1 sitename">MyWebsite</strong>{" "}
-                    <span>All Rights Reserved</span>
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="footer-bottom-links">
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Terms of Service</a>
-                  <a href="#">Cookie Policy</a>
-                </div>
-                <div className="credits">
-                  {/* All the links in the footer should remain intact. */}
-                  {/* You can delete the links only if you've purchased the pro version. */}
-                  {/* Licensing information: https://bootstrapmade.com/license/ */}
-                  {/* Purchase the pro version with working PHP/AJAX contact form: [buy-url] */}
-                  Designed by{" "}
-                  <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-      {/* Scroll Top */}
-      <a
-        href="#"
-        id="scroll-top"
-        className="scroll-top d-flex align-items-center justify-content-center"
-      >
-        <i className="bi bi-arrow-up-short" />
-      </a>
-      {/* Preloader */}
-      {/* <div id="preloader" /> */}
-      {/* Vendor JS Files */}
-      {/* Main JS File */}
     </div>
   );
 }

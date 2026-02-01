@@ -3,11 +3,12 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { name, phone, message, propertyId } = await request.json();
+    const { name, email, phone, subject, message, propertyId } =
+      await request.json();
 
-    if (!name || !phone || !propertyId) {
+    if (!name || (!email && !phone)) {
       return NextResponse.json({
-        error: "Missing required fields",
+        error: "Name and either Email or Phone are required",
         status: 400,
         success: false,
       });
@@ -16,14 +17,16 @@ export async function POST(request) {
     const lead = await prisma.lead.create({
       data: {
         name,
+        email,
         phone,
+        subject,
         message,
-        propertyId,
+        propertyId: propertyId || null,
       },
     });
 
     return NextResponse.json({
-      message: "Lead created successfully",
+      message: "Message sent successfully",
       status: 201,
       data: lead,
       success: true,

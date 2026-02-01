@@ -8,6 +8,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import api from "@/lib/axios";
 import { showSuccess, showError } from "@/lib/toast";
+import TopTitle from "@/components/TopTitle";
 
 export default function AdminPropertyView() {
   const { id } = useParams();
@@ -65,6 +66,13 @@ export default function AdminPropertyView() {
 
   return (
     <div className="container-fluid py-4 position-relative">
+      <TopTitle
+        title={
+          property
+            ? `Admin: View ${property.title} | UrbanEstate`
+            : "Admin: View Property | UrbanEstate"
+        }
+      />
       {/* Image Popup Modal */}
       {selectedImage && (
         <div

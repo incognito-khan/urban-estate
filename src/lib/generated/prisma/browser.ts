@@ -32,3 +32,8 @@ export type Lead = Prisma.LeadModel
  * 
  */
 export type Admin = Prisma.AdminModel
+/**
+ * Model Newsletter
+ * 
+ */
+export type Newsletter = Prisma.NewsletterModel

@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Property: 'Property',
   Lead: 'Lead',
-  Admin: 'Admin'
+  Admin: 'Admin',
+  Newsletter: 'Newsletter'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -79,9 +80,18 @@ export const PropertyScalarFieldEnum = {
   description: 'description',
   price: 'price',
   location: 'location',
-  type: 'type',
-  status: 'status',
   images: 'images',
+  type: 'type',
+  listingType: 'listingType',
+  status: 'status',
+  beds: 'beds',
+  baths: 'baths',
+  sqft: 'sqft',
+  isFeatured: 'isFeatured',
+  garage: 'garage',
+  swimmingPool: 'swimmingPool',
+  balcony: 'balcony',
+  garden: 'garden',
   createdAt: 'createdAt'
 } as const
 
@@ -91,7 +101,9 @@ export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typ
 export const LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  email: 'email',
   phone: 'phone',
+  subject: 'subject',
   message: 'message',
   status: 'status',
   propertyId: 'propertyId',
@@ -109,6 +121,15 @@ export const AdminScalarFieldEnum = {
 } as const
 
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
+
+
+export const NewsletterScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  createdAt: 'createdAt'
+} as const
+
+export type NewsletterScalarFieldEnum = (typeof NewsletterScalarFieldEnum)[keyof typeof NewsletterScalarFieldEnum]
 
 
 export const SortOrder = {

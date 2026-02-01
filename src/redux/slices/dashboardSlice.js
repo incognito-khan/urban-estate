@@ -9,6 +9,7 @@ const initialState = {
     convertedLeads: 0,
     pendingLeads: 0,
     totalProperties: 0,
+    totalSubscribers: 0,
   },
   recentLeads: [],
   statusSummary: [],

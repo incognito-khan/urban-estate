@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { login } from "@/redux/slices/authSlice";
+import TopTitle from "@/components/TopTitle";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,6 +22,7 @@ export default function Login() {
   };
   return (
     <div className="container vh-100 d-flex align-items-center justify-content-center">
+      <TopTitle title="Admin: Login | UrbanEstate" />
       <div className="row w-100 justify-content-center">
         <div className="col-xl-10 col-lg-12 col-md-9">
           <div className="card o-hidden border-0 shadow-lg my-5">

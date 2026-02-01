@@ -6,6 +6,7 @@ import { getLeads, updateLeadStatus, delLead } from "@/redux/slices/leadSlice";
 import { format } from "date-fns";
 import Link from "next/link";
 import ConfirmDialog from "@/components/ConfirmDialog";
+import TopTitle from "@/components/TopTitle";
 
 export default function LeadsPage() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export default function LeadsPage() {
 
   return (
     <div className="container-fluid py-4">
+      <TopTitle title="Admin: Leads | UrbanEstate" />
       {/* Page Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>

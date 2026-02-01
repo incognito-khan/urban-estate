@@ -1,139 +1,24 @@
-import React from "react";
+export const metadata = {
+  title: "Terms of Service | UrbanEstate",
+  description: "Terms and conditions for using our services.",
+};
+
+import Link from "next/link";
 
 export default function Terms() {
   return (
     <div>
-      <header
-        id="header"
-        className="header d-flex align-items-center fixed-top"
-      >
-        <div className="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-          <a
-            href="index.html"
-            className="logo d-flex align-items-center me-auto me-xl-0"
-          >
-            {/* Uncomment the line below if you also wish to use an image logo */}
-            {/* <img src="assets/img/logo.webp" alt=""> */}
-            <h1 className="sitename">TheProperty</h1>
-          </a>
-          <nav id="navmenu" className="navmenu">
-            <ul>
-              <li>
-                <a href="index.html">Home</a>
-              </li>
-              <li>
-                <a href="about.html">About</a>
-              </li>
-              <li>
-                <a href="properties.html">Properties</a>
-              </li>
-              <li>
-                <a href="services.html">Services</a>
-              </li>
-              <li>
-                <a href="agents.html">Agents</a>
-              </li>
-              <li>
-                <a href="blog.html">Blog</a>
-              </li>
-              <li className="dropdown">
-                <a href="#">
-                  <span>More Pages</span>{" "}
-                  <i className="bi bi-chevron-down toggle-dropdown" />
-                </a>
-                <ul>
-                  <li>
-                    <a href="property-details.html">Property Details</a>
-                  </li>
-                  <li>
-                    <a href="service-details.html">Service Details</a>
-                  </li>
-                  <li>
-                    <a href="agent-profile.html">Agent Profile</a>
-                  </li>
-                  <li>
-                    <a href="blog-details.html">Blog Details</a>
-                  </li>
-                  <li>
-                    <a href="terms.html" className="active">
-                      Terms
-                    </a>
-                  </li>
-                  <li>
-                    <a href="privacy.html">Privacy</a>
-                  </li>
-                  <li>
-                    <a href="404.html">404</a>
-                  </li>
-                </ul>
-              </li>
-              <li className="dropdown">
-                <a href="#">
-                  <span>Dropdown</span>{" "}
-                  <i className="bi bi-chevron-down toggle-dropdown" />
-                </a>
-                <ul>
-                  <li>
-                    <a href="#">Dropdown 1</a>
-                  </li>
-                  <li className="dropdown">
-                    <a href="#">
-                      <span>Deep Dropdown</span>{" "}
-                      <i className="bi bi-chevron-down toggle-dropdown" />
-                    </a>
-                    <ul>
-                      <li>
-                        <a href="#">Deep Dropdown 1</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 2</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 3</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 4</a>
-                      </li>
-                      <li>
-                        <a href="#">Deep Dropdown 5</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 2</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 3</a>
-                  </li>
-                  <li>
-                    <a href="#">Dropdown 4</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="contact.html">Contact</a>
-              </li>
-            </ul>
-            <i className="mobile-nav-toggle d-xl-none bi bi-list" />
-          </nav>
-          <a className="btn-getstarted" href="properties.html">
-            Get Started
-          </a>
-        </div>
-      </header>
-      <main className="main">
+      <main className="main pt-5 mt-5">
         {/* Page Title */}
         <div className="page-title">
           <div className="heading">
             <div className="container">
               <div className="row d-flex justify-content-center text-center">
                 <div className="col-lg-8">
-                  <h1 className="heading-title">Terms</h1>
+                  <h1 className="heading-title">Terms of Service</h1>
                   <p className="mb-0">
-                    Odio et unde deleniti. Deserunt numquam exercitationem.
-                    Officiis quo odio sint voluptas consequatur ut a odio
-                    voluptatem. Sit dolorum debitis veritatis natus dolores.
-                    Quasi ratione sint. Sit quaerat ipsum dolorem.
+                    Please read these terms of service carefully before using
+                    our services.
                   </p>
                 </div>
               </div>
@@ -143,9 +28,9 @@ export default function Terms() {
             <div className="container">
               <ol>
                 <li>
-                  <a href="index.html">Home</a>
+                  <Link href="/">Home</Link>
                 </li>
-                <li className="current">Terms</li>
+                <li className="current">Terms of Service</li>
               </ol>
             </div>
           </nav>
@@ -156,14 +41,7 @@ export default function Terms() {
           <div className="container" data-aos="fade-up">
             {/* Page Header */}
             <div className="tos-header text-center" data-aos="fade-up">
-              <span className="last-updated">
-                Last Updated: February 27, 2025
-              </span>
-              <h2>Terms of Service</h2>
-              <p>
-                Please read these terms of service carefully before using our
-                services
-              </p>
+              <span className="last-updated">Last Updated: February 2025</span>
             </div>
             {/* Content */}
             <div
@@ -180,13 +58,6 @@ export default function Terms() {
                   regulations. If you do not agree with any of these terms, you
                   are prohibited from using or accessing our services.
                 </p>
-                <div className="info-box">
-                  <i className="bi bi-info-circle" />
-                  <p>
-                    These terms apply to all users, visitors, and others who
-                    access or use our services.
-                  </p>
-                </div>
               </div>
               {/* Intellectual Property */}
               <div id="intellectual-property" className="content-section">
@@ -244,10 +115,6 @@ export default function Terms() {
                     <i className="bi bi-x-circle" />
                     <span>Engaging in unauthorized framing</span>
                   </div>
-                  <div className="prohibited-item">
-                    <i className="bi bi-x-circle" />
-                    <span>Attempting to gain unauthorized access</span>
-                  </div>
                 </div>
               </div>
               {/* Disclaimers */}
@@ -258,15 +125,6 @@ export default function Terms() {
                   provided "AS IS" and "AS AVAILABLE" without warranties of any
                   kind, whether express or implied.
                 </p>
-                <div className="disclaimer-box">
-                  <p>We do not guarantee that:</p>
-                  <ul>
-                    <li>The service will meet your requirements</li>
-                    <li>The service will be uninterrupted or error-free</li>
-                    <li>Results from using the service will be accurate</li>
-                    <li>Any errors will be corrected</li>
-                  </ul>
-                </div>
               </div>
               {/* Limitation of Liability */}
               <div id="limitation" className="content-section">
@@ -277,49 +135,14 @@ export default function Terms() {
                   arising out of or in connection with your use of the service.
                 </p>
               </div>
-              {/* Indemnification */}
-              <div id="indemnification" className="content-section">
-                <h3>7. Indemnification</h3>
-                <p>
-                  You agree to defend, indemnify, and hold us harmless from and
-                  against any claims, liabilities, damages, losses, and expenses
-                  arising out of your use of the service.
-                </p>
-              </div>
-              {/* Termination */}
-              <div id="termination" className="content-section">
-                <h3>8. Termination</h3>
-                <p>
-                  We may terminate or suspend your account immediately, without
-                  prior notice or liability, for any reason whatsoever,
-                  including without limitation if you breach the Terms.
-                </p>
-              </div>
-              {/* Governing Law */}
-              <div id="governing-law" className="content-section">
-                <h3>9. Governing Law</h3>
-                <p>
-                  These Terms shall be governed by and construed in accordance
-                  with the laws of [Your Country], without regard to its
-                  conflict of law provisions.
-                </p>
-              </div>
               {/* Changes */}
               <div id="changes" className="content-section">
-                <h3>10. Changes to Terms</h3>
+                <h3>7. Changes to Terms</h3>
                 <p>
                   We reserve the right to modify or replace these Terms at any
                   time. We will provide notice of any changes by posting the new
                   Terms on this page.
                 </p>
-                <div className="notice-box">
-                  <i className="bi bi-bell" />
-                  <p>
-                    By continuing to access or use our service after those
-                    revisions become effective, you agree to be bound by the
-                    revised terms.
-                  </p>
-                </div>
               </div>
             </div>
             {/* Contact Section */}
@@ -338,9 +161,9 @@ export default function Terms() {
                     If you have any questions about these Terms, please contact
                     us.
                   </p>
-                  <a href="#" className="contact-link">
+                  <Link href="/contact" className="contact-link">
                     Contact Support
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -348,199 +171,6 @@ export default function Terms() {
         </section>
         {/* /Terms Of Service Section */}
       </main>
-      <footer id="footer" className="footer position-relative">
-        <div className="container">
-          <div className="row gy-5">
-            <div className="col-lg-4">
-              <div className="footer-content">
-                <a
-                  href="index.html"
-                  className="logo d-flex align-items-center mb-4"
-                >
-                  <span className="sitename">TheProperty</span>
-                </a>
-                <p className="mb-4">
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia curae. Donec velit neque auctor sit
-                  amet aliquam vel ullamcorper sit amet ligula.
-                </p>
-                <div className="newsletter-form">
-                  <h5>Stay Updated</h5>
-                  <form
-                    action="forms/newsletter.php"
-                    method="post"
-                    className="php-email-form"
-                  >
-                    <div className="input-group">
-                      <input
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Enter your email"
-                        required=""
-                      />
-                      <button type="submit" className="btn-subscribe">
-                        <i className="bi bi-send" />
-                      </button>
-                    </div>
-                    <div className="loading">Loading</div>
-                    <div className="error-message" />
-                    <div className="sent-message">
-                      Thank you for subscribing!
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-2 col-6">
-              <div className="footer-links">
-                <h4>Company</h4>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> About
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Careers
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Press
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-lg-2 col-6">
-              <div className="footer-links">
-                <h4>Solutions</h4>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Digital Strategy
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Cloud Computing
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Data Analytics
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> AI Solutions
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="bi bi-chevron-right" /> Cybersecurity
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="footer-contact">
-                <h4>Get in Touch</h4>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-geo-alt" />
-                  </div>
-                  <div className="contact-info">
-                    <p>
-                      2847 Maple Avenue
-                      <br />
-                      Los Angeles, CA 90210
-                      <br />
-                      United States
-                    </p>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-telephone" />
-                  </div>
-                  <div className="contact-info">
-                    <p>+1 (555) 987-6543</p>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="contact-icon">
-                    <i className="bi bi-envelope" />
-                  </div>
-                  <div className="contact-info">
-                    <p>contact@example.com</p>
-                  </div>
-                </div>
-                <div className="social-links">
-                  <a href="#">
-                    <i className="bi bi-facebook" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-twitter-x" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-linkedin" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-youtube" />
-                  </a>
-                  <a href="#">
-                    <i className="bi bi-github" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-lg-6">
-                <div className="copyright">
-                  <p>
-                    © <span>Copyright</span>{" "}
-                    <strong className="px-1 sitename">MyWebsite</strong>{" "}
-                    <span>All Rights Reserved</span>
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="footer-bottom-links">
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Terms of Service</a>
-                  <a href="#">Cookie Policy</a>
-                </div>
-                <div className="credits">
-                  {/* All the links in the footer should remain intact. */}
-                  {/* You can delete the links only if you've purchased the pro version. */}
-                  {/* Licensing information: https://bootstrapmade.com/license/ */}
-                  {/* Purchase the pro version with working PHP/AJAX contact form: [buy-url] */}
-                  Designed by{" "}
-                  <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

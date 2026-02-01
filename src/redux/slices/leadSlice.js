@@ -13,7 +13,9 @@ export const addLead = createAsyncThunk(
     try {
       const response = await api.post("/lead", formData);
       if (response.data.success) {
-        showSuccess(response.data.message);
+        showSuccess(
+          "Thank you for your interest! We will get back to you soon.",
+        );
         return response.data.data;
       } else {
         showError(response.data.error);

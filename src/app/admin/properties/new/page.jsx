@@ -8,26 +8,35 @@ import { addProperty } from "@/redux/slices/propertySlice";
 import { showError } from "@/lib/toast";
 import { slugify } from "@/lib/slugify";
 import { useRouter } from "next/navigation";
+import TopTitle from "@/components/TopTitle";
 
 export default function AddPropertyPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-
   const [form, setForm] = useState({
     title: "",
     slug: "",
     location: "",
     type: "House",
+    listingType: "SALE",
     status: "available",
     price: "",
     description: "",
+    beds: "",
+    baths: "",
+    sqft: "",
+    isFeatured: false,
+    garage: false,
+    swimmingPool: false,
+    balcony: false,
+    garden: false,
   });
 
   const [images, setImages] = useState([]);
   // [{ url, loading }]
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     if (name === "title") {
       setForm((prev) => ({
@@ -35,6 +44,8 @@ export default function AddPropertyPage() {
         title: value,
         slug: slugify(value),
       }));
+    } else if (type === "checkbox") {
+      setForm((prev) => ({ ...prev, [name]: checked }));
     } else {
       setForm((prev) => ({ ...prev, [name]: value }));
     }
@@ -93,6 +104,9 @@ export default function AddPropertyPage() {
     const payload = {
       ...form,
       price: parseInt(form.price),
+      beds: form.beds ? parseInt(form.beds) : null,
+      baths: form.baths ? parseInt(form.baths) : null,
+      sqft: form.sqft ? parseInt(form.sqft) : null,
       images: images.map((img) => img.url),
     };
 
@@ -102,6 +116,7 @@ export default function AddPropertyPage() {
 
   return (
     <div className="container-fluid py-4">
+      <TopTitle title="Admin: Add Property | UrbanEstate" />
       <div className="row justify-content-center">
         <div className="col-lg-9">
           <div className="card shadow-sm">
@@ -142,6 +157,19 @@ export default function AddPropertyPage() {
                   </div>
 
                   <div className="col-md-4">
+                    <label className="form-label">Listing Type</label>
+                    <select
+                      name="listingType"
+                      value={form.listingType}
+                      onChange={handleChange}
+                      className="form-select"
+                    >
+                      <option value="SALE">For Sale</option>
+                      <option value="RENT">For Rent</option>
+                    </select>
+                  </div>
+
+                  <div className="col-md-4">
                     <label className="form-label">Status</label>
                     <select
                       name="status"
@@ -161,7 +189,127 @@ export default function AddPropertyPage() {
                       value={form.price}
                       onChange={handleChange}
                       className="form-control"
+                      type="number"
                     />
+                  </div>
+
+                  <div className="col-md-4">
+                    <label className="form-label">Bedrooms</label>
+                    <input
+                      name="beds"
+                      type="number"
+                      value={form.beds}
+                      onChange={handleChange}
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="col-md-4">
+                    <label className="form-label">Bathrooms</label>
+                    <input
+                      name="baths"
+                      type="number"
+                      value={form.baths}
+                      onChange={handleChange}
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="col-md-4">
+                    <label className="form-label">Sqft</label>
+                    <input
+                      name="sqft"
+                      type="number"
+                      value={form.sqft}
+                      onChange={handleChange}
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="col-md-4 d-flex align-items-center mt-4">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name="isFeatured"
+                        id="isFeatured"
+                        checked={form.isFeatured}
+                        onChange={handleChange}
+                      />
+                      <label className="form-check-label" htmlFor="isFeatured">
+                        Featured Property
+                      </label>
+                    </div>
+                  </div>
+
+                  <hr className="my-4" />
+                  <h5 className="mb-3">Amenities</h5>
+
+                  <div className="col-md-3">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name="garage"
+                        id="garage"
+                        checked={form.garage}
+                        onChange={handleChange}
+                      />
+                      <label className="form-check-label" htmlFor="garage">
+                        Garage
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-md-3">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name="swimmingPool"
+                        id="swimmingPool"
+                        checked={form.swimmingPool}
+                        onChange={handleChange}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="swimmingPool"
+                      >
+                        Swimming Pool
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-md-3">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name="balcony"
+                        id="balcony"
+                        checked={form.balcony}
+                        onChange={handleChange}
+                      />
+                      <label className="form-check-label" htmlFor="balcony">
+                        Balcony
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-md-3">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name="garden"
+                        id="garden"
+                        checked={form.garden}
+                        onChange={handleChange}
+                      />
+                      <label className="form-check-label" htmlFor="garden">
+                        Garden
+                      </label>
+                    </div>
                   </div>
                   <div className="col-12">
                     <label className="form-label">Description</label>

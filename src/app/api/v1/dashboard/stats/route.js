@@ -13,6 +13,7 @@ export async function GET() {
     });
 
     const totalProperties = await prisma.property.count();
+    const totalSubscribers = await prisma.newsletter.count();
 
     // Get recent leads with property details
     const recentLeads = await prisma.lead.findMany({
@@ -43,6 +44,7 @@ export async function GET() {
           convertedLeads,
           pendingLeads,
           totalProperties,
+          totalSubscribers,
         },
         recentLeads,
         statusSummary,

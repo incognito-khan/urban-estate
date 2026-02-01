@@ -2,9 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { getProperties, delProperty } from "@/redux/slices/propertySlice";
+import {
+  getProperties,
+  delProperty,
+  updateProperty,
+} from "@/redux/slices/propertySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
+import TopTitle from "@/components/TopTitle";
 
 export default function PropertiesPage() {
   const dispatch = useDispatch();
@@ -28,6 +33,15 @@ export default function PropertiesPage() {
     await dispatch(delProperty(id));
   };
 
+  const handleToggleFeatured = async (property) => {
+    await dispatch(
+      updateProperty({
+        id: property.id,
+        formData: { isFeatured: !property.isFeatured },
+      }),
+    );
+  };
+
   if (loading) {
     return (
       <div
@@ -44,6 +58,7 @@ export default function PropertiesPage() {
 
   return (
     <div className="container-fluid py-4">
+      <TopTitle title="Admin: Properties | UrbanEstate" />
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h3 mb-0">Properties</h1>
@@ -63,6 +78,7 @@ export default function PropertiesPage() {
                 <th>Type</th>
                 <th>Price</th>
                 <th>Status</th>
+                <th>Featured</th>
                 <th>Created</th>
                 <th></th>
               </tr>
@@ -76,6 +92,28 @@ export default function PropertiesPage() {
                   <td>{property.type}</td>
                   <td>{property.price}</td>
                   <td>{property.status}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-link p-0 text-decoration-none"
+                      onClick={() => handleToggleFeatured(property)}
+                      title={
+                        property.isFeatured
+                          ? "Unfeature Property"
+                          : "Feature Property"
+                      }
+                    >
+                      {property.isFeatured ? (
+                        <span className="badge bg-warning text-dark">
+                          <i className="bi bi-star-fill me-1"></i> Featured
+                        </span>
+                      ) : (
+                        <span className="text-muted">
+                          <i className="bi bi-star me-1"></i> -
+                        </span>
+                      )}
+                    </button>
+                  </td>
                   <td>{formatDate(property.createdAt)}</td>
                   <td>
                     <Link

@@ -8,27 +8,38 @@ datasource db {
 }
 
 model Property {
-  id          String         @id @default(uuid())
-  title       String
-  slug        String         @unique
-  description String?
-  price       Int
-  location    String
-  type        PropertyType
-  status      PropertyStatus @default(available)
-  images      String[]
-  leads       Lead[]
-  createdAt   DateTime       @default(now())
+  id           String         @id @default(uuid())
+  title        String
+  slug         String         @unique
+  description  String?
+  price        Int
+  location     String
+  images       String[]
+  type         PropertyType
+  listingType  ListingType    @default(SALE)
+  status       PropertyStatus @default(available)
+  beds         Int?
+  baths        Int?
+  sqft         Int?
+  isFeatured   Boolean        @default(false)
+  garage       Boolean        @default(false)
+  swimmingPool Boolean        @default(false)
+  balcony      Boolean        @default(false)
+  garden       Boolean        @default(false)
+  leads        Lead[]
+  createdAt    DateTime       @default(now())
 }
 
 model Lead {
   id         String     @id @default(uuid())
   name       String
-  phone      String
+  email      String?
+  phone      String?
+  subject    String?
   message    String?
   status     LeadStatus @default(new)
-  propertyId String
-  property   Property   @relation(fields: [propertyId], references: [id])
+  propertyId String?
+  property   Property?  @relation(fields: [propertyId], references: [id])
   createdAt  DateTime   @default(now())
 }
 
@@ -50,8 +61,19 @@ enum PropertyStatus {
   sold
 }
 
+enum ListingType {
+  SALE
+  RENT
+}
+
 enum LeadStatus {
   new
   contact
   sold
+}
+
+model Newsletter {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
 }

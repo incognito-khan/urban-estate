@@ -73,6 +73,17 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
         </a>
       </li>
 
+      {/* Newsletter */}
+      <li className="nav-item">
+        <a
+          className={`nav-link ${isCollapsed ? "text-center w-100" : ""}`}
+          href="/admin/newsletter"
+        >
+          <i className="fas fa-fw fa-envelope"></i>
+          <span>Newsletter</span>
+        </a>
+      </li>
+
       <hr className="sidebar-divider d-none d-md-block" />
 
       {/* Sidebar Toggle */}

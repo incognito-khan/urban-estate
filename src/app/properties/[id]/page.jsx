@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { getProperty } from "@/redux/slices/propertySlice";
 import { addLead } from "@/redux/slices/leadSlice";
 import { showError } from "@/lib/toast";
+import TopTitle from "@/components/TopTitle";
 
 export default function PropertiesDetails() {
   const dispatch = useDispatch();
@@ -64,48 +65,25 @@ export default function PropertiesDetails() {
   }
 
   return (
-    <div className="premium-light-theme min-vh-100 bg-white">
-      {/* Header */}
-      <header className="header-clean fixed-top bg-white border-bottom shadow-sm">
-        <div className="container-xl d-flex align-items-center justify-content-between h-100">
-          <a href="/" className="brand-logo text-decoration-none">
-            <span className="text-primary fw-900">URBAN</span>
-            <span className="text-dark fw-300">ESTATE</span>
-          </a>
-          <nav className="d-none d-lg-flex gap-4">
-            <a href="/" className="menu-item">
-              Home
-            </a>
-            <a href="/properties" className="menu-item active">
-              Properties
-            </a>
-            <a href="/about" className="menu-item">
-              About
-            </a>
-            <a href="/contact" className="menu-item">
-              Contact
-            </a>
-          </nav>
-          <a
-            href="/properties"
-            className="btn btn-primary rounded-pill px-4 fw-bold shadow-sm"
-          >
-            Explore More
-          </a>
-        </div>
-      </header>
-
-      <main className="pt-5 mt-5">
+    <div className="premium-light-theme min-vh-100 bg-white pt-5 mt-5">
+      <TopTitle
+        title={
+          property
+            ? `${property.title} | UrbanEstate`
+            : "Property Details | UrbanEstate"
+        }
+      />
+      <main>
         <section className="py-5">
           <div className="container">
             {/* Title & Location Header */}
             <div className="mb-4">
               <div className="d-flex align-items-center gap-2 mb-2">
                 <span
-                  className="badge bg-primary-soft text-primary px-3 py-2 rounded-2 fw-bold text-uppercase"
+                  className={`badge px-3 py-2 rounded-2 fw-bold text-uppercase ${property.listingType === "RENT" ? "bg-info-soft text-info" : "bg-primary-soft text-primary"}`}
                   style={{ fontSize: "0.7rem" }}
                 >
-                  {property.type}
+                  {property.listingType === "RENT" ? "For Rent" : "For Sale"}
                 </span>
                 <span
                   className="badge bg-success-soft text-success px-3 py-2 rounded-2 fw-bold text-uppercase"
@@ -213,6 +191,24 @@ export default function PropertiesDetails() {
                       color: "success",
                     },
                     {
+                      label: "Bedrooms",
+                      value: `${property.beds || 0} ${property.beds === 1 ? "Bed" : "Beds"}`,
+                      icon: "bi-door-open",
+                      color: "info",
+                    },
+                    {
+                      label: "Bathrooms",
+                      value: `${property.baths || 0} ${property.baths === 1 ? "Bath" : "Baths"}`,
+                      icon: "bi-droplet",
+                      color: "warning",
+                    },
+                    {
+                      label: "Sqft",
+                      value: `${property.sqft?.toLocaleString() || 0} sqft`,
+                      icon: "bi-aspect-ratio",
+                      color: "secondary",
+                    },
+                    {
                       label: "Location",
                       value: property.location?.split(",")[0],
                       icon: "bi-geo",
@@ -236,6 +232,52 @@ export default function PropertiesDetails() {
                     </div>
                   ))}
                 </div>
+
+                {/* Amenities Section */}
+                {(property.garage ||
+                  property.swimmingPool ||
+                  property.balcony ||
+                  property.garden) && (
+                  <div className="amenities-card p-5 rounded-4 border bg-white mb-5 shadow-sm">
+                    <h3 className="fw-800 text-slate-900 mb-4 border-start border-primary border-4 ps-3">
+                      Amenities
+                    </h3>
+                    <div className="row g-4">
+                      {property.garage && (
+                        <div className="col-md-6 col-lg-3">
+                          <div className="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border">
+                            <i className="bi bi-p-square-fill text-primary fs-4"></i>
+                            <span className="fw-bold">Garage</span>
+                          </div>
+                        </div>
+                      )}
+                      {property.swimmingPool && (
+                        <div className="col-md-6 col-lg-3">
+                          <div className="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border">
+                            <i className="bi bi-water text-primary fs-4"></i>
+                            <span className="fw-bold">Pool</span>
+                          </div>
+                        </div>
+                      )}
+                      {property.balcony && (
+                        <div className="col-md-6 col-lg-3">
+                          <div className="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border">
+                            <i className="bi bi-window-sidebar text-primary fs-4"></i>
+                            <span className="fw-bold">Balcony</span>
+                          </div>
+                        </div>
+                      )}
+                      {property.garden && (
+                        <div className="col-md-6 col-lg-3">
+                          <div className="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border">
+                            <i className="bi bi-tree-fill text-primary fs-4"></i>
+                            <span className="fw-bold">Garden</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Right Column: Sidebar */}
@@ -339,32 +381,6 @@ export default function PropertiesDetails() {
           </div>
         </section>
       </main>
-
-      <footer className="py-5 bg-white border-top mt-5">
-        <div className="container text-center">
-          <div className="brand-logo mb-3">
-            <span className="text-primary fw-900">URBAN</span>
-            <span className="text-dark fw-300">ESTATE</span>
-          </div>
-          <p className="text-slate-500 mb-4">
-            Premium Real Estate Solutions. Redefined.
-          </p>
-          <div className="d-flex justify-content-center gap-3 mb-4">
-            <a href="#" className="footer-icon">
-              <i className="bi bi-instagram"></i>
-            </a>
-            <a href="#" className="footer-icon">
-              <i className="bi bi-facebook"></i>
-            </a>
-            <a href="#" className="footer-icon">
-              <i className="bi bi-twitter-x"></i>
-            </a>
-          </div>
-          <div className="text-slate-400 small">
-            © 2026 UrbanEstate. All Rights Reserved.
-          </div>
-        </div>
-      </footer>
 
       <style jsx>{`
         .premium-light-theme {
